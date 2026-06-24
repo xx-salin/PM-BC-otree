@@ -1,0 +1,426 @@
+
+{% block title %}
+
+
+
+
+    Comprehension Test
+{% endblock %}
+
+{% block content %}
+{% include 'ME/ProgressPieChart.html' %}
+
+{% if testing %}
+<br><br>
+<button id="skipBtn" class="otree-btn-next btn btn-secondary" >
+Skip for testing</button>
+<br><br>
+{% endif %}
+<form method="post" id="comprehensionTestForm">
+       
+    {% for field in form %}
+        
+        
+
+        
+        {% if field.name != 'failures_per_q' and field.name != 'failed_comprehension_test' %}
+            <div class="form-group">
+                
+                    <label>{{ field.label }}</label>
+
+                {{ field }}
+                {% if field.errors %}
+                <div class="invalid-feedback">{{ field.errors}}</div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+
+    {% endfor %}
+       
+    {% if form.errors %}
+    <div style="color: red;">
+        <pre>{{ form.errors }}</pre>
+    </div>
+    {% endif %}
+    
+
+        <div id="error-modal" class="modal custom-modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Error</h2>
+                <p id="error-message"></p>
+               
+            </div>
+        </div>
+
+
+        <!-- Display the submit button to proceed to the next page -->
+        <button type="submit" class="btn btn-primary" id="submitBtn">Next</button>
+
+       
+        <input type="hidden" name="failures_per_q" id="failures_per_q" style="display: none;"/>
+        <input type="hidden" name="failed_comprehension_test" id="failed_comprehension_test" value="False">
+   
+</form>
+
+{% endblock %}
+
+
+{% block styles %}
+
+<link rel="stylesheet" href="{% static 'ME/BaseDesign.css' %}"/>
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+<style>
+    .otree-form label,
+.otree-form span {
+    white-space: pre-line !important;
+}
+</style>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+
+    <script>
+        let variable_for_2 =js_vars.variable_for_2;
+        let participant_id = js_vars.participant_id; // Assuming you have a unique participant ID
+
+
+        console.log(variable_for_2);  // Check if variable is properly passed
+       
+
+       
+
+        var totalIncorrectSubmissionCounter = 0;
+        var totalIncorrectSubmissions = {
+            q1: 0,
+            q2: 0,
+            q3: 0,
+        };
+        
+  // Function to load incorrect submissions count from localStorage
+  function loadIncorrectSubmissions() {
+    let storedIncorrectSubmissions = localStorage.getItem(`totalIncorrectSubmissions_${participant_id}`);
+
+        if (storedIncorrectSubmissions) {
+            storedIncorrectSubmissions = storedIncorrectSubmissions.split(',');
+            totalIncorrectSubmissions.q1 = parseInt(storedIncorrectSubmissions[0]) || 0;
+            totalIncorrectSubmissions.q2 = parseInt(storedIncorrectSubmissions[1]) || 0;
+            totalIncorrectSubmissions.q3 = parseInt(storedIncorrectSubmissions[2]) || 0;
+            totalIncorrectSubmissions.q4 = parseInt(storedIncorrectSubmissions[3]) || 0;
+        }
+    }
+
+    // Function to save incorrect submissions count to localStorage
+    function saveIncorrectSubmissions() {
+        const submissionsString = [
+            totalIncorrectSubmissions.q1,
+            totalIncorrectSubmissions.q2,
+            totalIncorrectSubmissions.q3,
+            totalIncorrectSubmissions.q4
+        ].join(',');
+        localStorage.setItem(`totalIncorrectSubmissions_${participant_id}`, submissionsString);
+
+    }
+
+
+    // Load the incorrect submissions count when the page loads
+    loadIncorrectSubmissions();
+
+         // Define correct answers here
+         var correctAnswers = {};
+                //console.log(variable_for_2);
+
+                if (variable_for_2 == 1 || variable_for_2 == 9 ){
+                var correctAnswers = {
+                    'question_1': 1,
+                    'question_2': 0,
+                    'question_3': 0,
+                    'question_4': 0,
+                };
+            };
+
+            if (variable_for_2 == 5 || variable_for_2 == 13 ){
+                var correctAnswers = {
+                    'question_1': 1,
+                    'question_2': 1,
+                    'question_3': 0,
+                    'question_4': 0,
+                };
+            };
+                if (variable_for_2 == 2 || variable_for_2 == 10 ){
+                var correctAnswers = {
+                    'question_1': 1,
+                    'question_2': 0,
+                    'question_3': 2,
+                    'question_4': 2,
+
+                };
+            };
+            if (variable_for_2 == 6 || variable_for_2 == 14 ){
+                var correctAnswers = {
+                    'question_1': 1,
+                    'question_2': 1,
+                    'question_3': 2,
+                    'question_4': 2,
+
+                };
+            };
+                if (variable_for_2 == 3 || variable_for_2 == 11 ){
+                var correctAnswers = {
+                    'question_1': 1,
+                    'question_2': 0,
+                    'question_3': 1,
+                    'question_4': 1,
+                 
+                };
+            };
+            if (variable_for_2 == 7 || variable_for_2 == 15 ){
+                var correctAnswers = {
+                    'question_1': 1,
+                    'question_2': 1,
+                    'question_3': 1,
+                    'question_4': 1,
+                };
+            };
+                if (variable_for_2 == 4 || variable_for_2 == 12 ){
+                var correctAnswers = {
+                    'question_1': 1,
+                    'question_2': 0,
+                    'question_3': 2,
+                    'question_4': 2,
+                };
+            };
+
+            if (variable_for_2 == 8 || variable_for_2 == 16 ){
+                var correctAnswers = {
+                    'question_1': 1,
+                    'question_2': 1,
+                    'question_3': 2,
+                    'question_4': 2,
+                };
+            };
+
+
+
+
+        $(document).ready(function() {
+
+            var isFirstAttempt = true;
+            
+
+            $('#skipBtn').click(function() {
+                // Automatically select correct answers
+                for (var question in correctAnswers) {
+                    $('input[name="' + question + '"][value="' + correctAnswers[question] + '"]').prop('checked', true);
+                }
+                // Set hidden fields
+                $('#failures_per_q').val('skipped for test');
+                $('#failed_comprehension_test').val('False');
+    
+                // Submit the form automatically
+                $('#comprehensionTestForm').submit();
+            });
+
+
+            $('#submitBtn').click(function() {
+                
+                console.log("Submit button clicked");
+
+                var q1SelectedOption = $('input[name="question_1"]:checked').val();
+                var q2SelectedOption = $('input[name="question_2"]:checked').val();
+                var q3SelectedOption = $('input[name="question_3"]:checked').val();
+                var q4SelectedOption = $('input[name="question_4"]:checked').val();
+
+                // Initialize counters for incorrect submissions
+                var incorrectSubmissionCounter = 0;
+                var incorrectSubmissions = {
+                    q1: 0,
+                    q2: 0,
+                    q3: 0,
+                    q4: 0,
+                };
+
+         
+
+
+                // Check if any question is not answered
+                if (!q1SelectedOption || !q2SelectedOption || !q3SelectedOption || !q4SelectedOption) {
+                    showErrorModal("Please answer all questions.");
+                    return false;  // Prevent form submission
+                }
+               
+                    // Check if answers are correct and count incorrect submissions for each question
+                if (q1SelectedOption != correctAnswers['question_1']) {
+                    incorrectSubmissionCounter++;
+                    incorrectSubmissions.q1++;
+                    totalIncorrectSubmissionCounter++;
+                    totalIncorrectSubmissions.q1++;
+                }
+                if (q2SelectedOption != correctAnswers['question_2']) {
+                    incorrectSubmissionCounter++;
+                    incorrectSubmissions.q2++;
+                    totalIncorrectSubmissionCounter++;
+                    totalIncorrectSubmissions.q2++;
+                }
+                if (q3SelectedOption != correctAnswers['question_3']) {
+                    incorrectSubmissionCounter++;
+                    incorrectSubmissions.q3++;
+                    totalIncorrectSubmissionCounter++;
+                    totalIncorrectSubmissions.q3++;
+                }
+                if (q4SelectedOption != correctAnswers['question_4']) {
+                    incorrectSubmissionCounter++;
+                    incorrectSubmissions.q4++;
+                    totalIncorrectSubmissionCounter++;
+                    totalIncorrectSubmissions.q4++;
+                }
+
+                if (incorrectSubmissionCounter > 0) {
+                // Clear console before logging new values
+                errorOccurred = true;
+                console.clear();
+
+                
+
+                // Log incorrect submission counts for each question
+                console.log('Incorrect submissions for Question 1:', totalIncorrectSubmissions.q1);
+                console.log('Incorrect submissions for Question 2:', totalIncorrectSubmissions.q2);
+                console.log('Incorrect submissions for Question 3:', totalIncorrectSubmissions.q3);
+                console.log('Incorrect submissions for Question 4:', totalIncorrectSubmissions.q4);
+            
+          
+           
+                //Save incorrect submissions count to localStorage
+                saveIncorrectSubmissions();
+
+                    var errorMessage;
+                    
+
+                    
+
+                    switch (variable_for_2) {
+                        case 1:
+                        case 9:    
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 MONTHLY returns for both assets. You will be asked to SELL one asset and keep the other for one more month. One random monthly return will be drawn from the asset you kept, and your bonus will be 1 × (1 + return%).`;
+                            break;
+
+                        case 2:
+                        case 10:
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 MONTHLY returns for both assets. You will be asked to PREDICT the next month return for each asset. If your prediction is within ±0.3% of the statistically correct expected return for Month 13, you receive £2.`;
+                            break;
+
+                        case 3:
+                        case 11:
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 MONTHLY returns for both assets. You will be asked to REPURCHASE one asset and keep it for one more month. One random monthly return will be drawn from the asset you bought, and your bonus will be 1 × (1 + return%).`;
+                            break;
+
+                        case 4:
+                        case 12:
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 MONTHLY returns for both assets. You will be asked to PREDICT the next month return for each asset. If your prediction is within ±0.3% of the statistically correct expected return for Month 13, you receive £2.`;
+                            break;
+
+                        case 5:
+                        case 13:
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 RETURNS SINCE PURCHASE for both assets. You will be asked to SELL one asset and keep the other for one more month. One random monthly return will be drawn from the asset you kept, and your bonus will be 1 × (1 + return%).`;
+                            break;
+
+                        case 6:
+                        case 14:
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 RETURNS SINCE PURCHASE for both assets. You will be asked to PREDICT the next month return for each asset. If your prediction is within ±0.3% of the statistically correct expected return for Month 13, you receive £2.`;
+                            break;
+
+                        case 7:
+                        case 15:
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 RETURNS SINCE PURCHASE for both assets. You will be asked to REPURCHASE one asset and keep it for one more month. One random monthly return will be drawn from the asset you bought, and your bonus will be 1 × (1 + return%).`;
+                            break;
+
+                        case 8:
+                        case 16:
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 RETURNS SINCE PURCHASE for both assets. You will be asked to PREDICT the next month return for each asset. If your prediction is within ±0.3% of the statistically correct expected return for Month 13, you receive £2.`;
+                            break;
+
+                        default:
+                            errorMessage = "One or more answers are incorrect. Please review your answers.";
+                    }
+                    showErrorModal(errorMessage);
+                    return false;
+
+                } else {
+                    var logString = localStorage.getItem(`failures_per_q_${participant_id}`) || "";
+
+                    logString += 'Incorrect submissions for Question 1: ' + totalIncorrectSubmissions.q1 + '\n';
+                    logString += 'Incorrect submissions for Question 2: ' + totalIncorrectSubmissions.q2 + '\n';
+                    logString += 'Incorrect submissions for Question 3: ' + totalIncorrectSubmissions.q3 + '\n';
+                    logString += 'Incorrect submissions for Question 4: ' + totalIncorrectSubmissions.q4 + '\n';
+                    // logString += 'Incorrect submissions for Question 4: ' + totalIncorrectSubmissions.q4 + '\n';
+                    // logString += 'Incorrect submissions for Question 5: ' + totalIncorrectSubmissions.q5 + '\n';
+
+                    //sessionStorage.setItem('somethingValue', logString);
+                    //document.getElementById('something').value = logString;
+
+                    console.log(logString);
+
+                    
+
+                    //Set the value of the hidden input field 'something'
+                    document.getElementById('failures_per_q').value = logString; 
+                    console.log("Value of 'failures_per_q': ", document.getElementById('failures_per_q').value);
+                    window.localStorage.setItem(`failures_per_q_${participant_id}`, logString);
+                    
+                    // Check if all answers are correct and it's the first attempt
+                    if (totalIncorrectSubmissions.q1 === 0 && totalIncorrectSubmissions.q2 === 0 &&
+                        totalIncorrectSubmissions.q3 === 0 && totalIncorrectSubmissions.q4 === 0 && isFirstAttempt) {
+        
+                        // Update the value of failed_comprehension_test
+                         document.getElementById('failed_comprehension_test').value = 'False';
+                 } else {
+                     // Update failed_comprehension_test to 1 if not all correct or not first attempt
+                         document.getElementById('failed_comprehension_test').value = 'True';
+                        }
+
+                        saveIncorrectSubmissions();
+
+                    document.getElementById('comprehensionTestForm').submit();
+                    return true;   
+                    
+                }
+                // Check if all answers are correct and it's the first attempt
+                
+                });
+
+                var modal = document.getElementById("error-modal");
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none";
+            resetForm();
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                resetForm();
+            }
+        }
+
+        function resetForm() {
+            $('input[type="radio"]').prop('checked', false);
+        }
+
+        function showErrorModal(message) {
+            var errorModal = document.getElementById('error-modal');
+            var errorMessageContainer = document.getElementById('error-message');
+            errorMessageContainer.textContent = message;
+            errorModal.style.display = 'block';
+        }
+    });
+       
+    </script> 
+        
+{% endblock %}
+

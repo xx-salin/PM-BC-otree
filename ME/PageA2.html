@@ -1,0 +1,74 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+
+{% endblock %}
+
+
+
+{% block content %}
+
+{% include 'ME/ProgressPieChart.html' %}
+{% if testing %}
+    <br>
+    <button id="skipBtn" class="btn btn-secondary px-3" onclick="skipPage()" >
+    Skip for testing</button><br><br>
+{% endif %}
+
+
+
+    <p>
+        <img src="{% static 'ME/cafewall.png' %}" class="responsive-image" alt="cafewall" width = 80% style="display: block; margin-left: auto; margin-right: auto;" />
+    </p>
+
+    <div class="center-container">
+    
+
+    <p>
+        {% formfields %}
+    </p>
+
+    <p>
+     
+    </p>
+
+    <p>
+    <!-- .otree-btn-next is the CSS/jQuery selector for this button -->
+    <button class="otree-btn-next btn btn-primary">Next</button>
+    </p>
+</div>
+{% endblock %}
+
+{% block styles %}
+
+<link rel="stylesheet" href="{% static 'ME/BaseDesign.css' %}"/>
+
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+<style>
+    .center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.center-container p {
+    text-align: center;
+}
+
+</style>
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+<script>
+function skipPage() {
+    document.querySelectorAll('input[name="cafewall"]')[1].checked = true;
+    document.querySelector('.otree-btn-next').click();
+}
+</script>
+
+
+{% endblock %}
+

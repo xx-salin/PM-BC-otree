@@ -1,0 +1,80 @@
+
+{% load staticfiles otree_tags %}
+
+{% block title %}
+  End of round {{player.round_number}} of {{Constants.num_rounds}}
+{% endblock %}
+
+{% block content %}
+{% include 'ME/ProgressPieChart.html' %}
+{% if testing %}
+    <br>
+    <button id="skipBtn"  class="btn btn-secondary px-3" onclick="skipPage()">
+    Skip for testing</button><br><br>
+{% endif %}
+
+
+<div class="success-message">
+    <p>
+        This concludes investment round {{player.round_number}} of {{Constants.num_rounds}}. 
+    </p>
+
+    {% if player.round_number < Constants.num_rounds %}
+    <p>
+    We now move on to the next investment round. The assets in the next round are independent of assets in this round.
+    </p>
+    {% endif %}
+    <div class="checkmark">✔</div>
+    <p>
+        <br>
+        <br>
+    </p>
+
+    <p>
+      
+        <button class="otree-btn-next btn btn-primary" >Next</button>
+    </p>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+
+<link rel="stylesheet" href="{% static 'ME/BaseDesign.css' %}"/>
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+
+<style>
+ 
+
+    /* Custom CSS for success message */
+    .success-message {
+        border: 2px solid #d4edda;
+        background-color: #d4edda; /* Light green background */
+        color: #155724; /* Darker green text color */
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+        position: relative;
+    }
+    
+    .success-message .checkmark {
+        font-size: 50px;
+        color: #28a745; /* Green color for the checkmark */
+        margin-top: 10px;
+    }
+    
+    .success-message p {
+        text-align: center;
+    }
+    
+</style>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+
+
+{% endblock %}
+	

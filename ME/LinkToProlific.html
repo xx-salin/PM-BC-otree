@@ -1,0 +1,32 @@
+
+{% load otree_tags %}
+{% block title %} 
+
+
+Thank you for your participation.
+Remember to submit your answers!{% endblock title %}
+
+{% block content %}
+{% include 'ME/ProgressPieChart.html' %}
+{% if testing %}
+    <br>
+    <button id="skipBtn" class="btn btn-secondary " onclick="skipPage()" >
+    Skip for testing</button>    <br>    <br>
+{% endif %}
+    <p>
+      To submit your answers and receive payment click the Prolific completion link below:
+    </p>
+    <a href='https://app.prolific.com/submissions/complete?cc=C5QU30JJ'>https://app.prolific.com/submissions/complete?cc=C5QU30JJ </a>
+
+{% endblock %}
+
+{% block styles %}
+
+<link rel="stylesheet" href="{% static 'ME/BaseDesign.css' %}"/>
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+{% endblock %}

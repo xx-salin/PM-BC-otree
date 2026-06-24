@@ -1,0 +1,350 @@
+{% load staticfiles %}
+{% load otree_tags %}
+
+{% block title %}
+Performance observations (round {{ player.round_number }} of {{ Constants.num_rounds }})
+{% endblock %}
+
+{% block styles %}
+
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+<style>
+
+
+
+body {
+    background: #f2f2f2;
+}
+
+.the-whole-space {
+    max-width: 560px;
+    width: min(560px, calc(100% - 24px));
+    margin: 40px auto;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    padding: 25px 0;
+}
+
+.header {
+    padding: 0 20px 15px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.month-title {
+    font-size: 20px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.subtle {
+    font-size: 14px;
+    color: #888;
+    margin-top: 4px;
+}
+
+.asset-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.asset-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.asset-name {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.asset-sub {
+    font-size: 13px;
+    color: #999;
+}
+
+.return-badge {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    min-width: 80px;
+    text-align: center;
+}
+
+.positive {
+    background-color: #16a34a;
+    color: white;
+}
+
+.negative {
+    background-color: #dc2626;
+    color: white;
+}
+
+.neutral {
+    background-color: transparent;
+    color: inherit;
+}
+
+.btn-area {
+    padding: 20px;
+    text-align: center;
+}
+
+.next-btn {
+    background: #2563eb;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.next-btn:hover {
+    opacity: 0.9;
+}
+
+.note-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #eff6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.note-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.note-row {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 12px 20px 20px 20px;
+}
+
+.note-text .subtle {
+        margin: 0;
+}
+.return-badge {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    min-width: 80px;
+    text-align: center;
+    border: 1px solid #999;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% include 'ME/ProgressPieChart.html' %}
+{% if testing %}
+    <br>
+    <button id="skipBtn" class="btn btn-secondary px-3" onclick="skipPage()" >
+    Skip for testing</button><br><br>
+{% endif %}
+
+
+<div class="the-whole-space">
+
+    <div class="header">
+        <div class="month-title" id="monthTitle">
+            {%if var in [1,2,3,4,9,10,11,12] %}
+            Monthly return at the end of Month 1
+            {% elif var in [5,6,7,8,13,14,15,16] %}
+            Return since purchase at the end of Month 1
+            {% endif %} 
+        </div>
+        
+    </div>
+
+    <div class="asset-row">
+        <div class="asset-info">
+            <div class="asset-name">Asset A</div>
+            
+        </div>
+        <div id="assetAValue" class="return-badge"></div>
+    </div>
+
+    <div class="asset-row">
+        <div class="asset-info">
+            <div class="asset-name">Asset B</div>
+            
+        </div>
+        <div id="assetBValue" class="return-badge"></div>
+    </div>
+
+    <div class="btn-area">
+        <button type="button" id="nextMonthBtn" class="next-btn">
+            Next month
+        </button>
+
+        <button type="submit"
+                id="finalNextBtn"
+                class="next-btn"
+                style="display:none;">
+            Next
+        </button>
+
+    </div>
+
+    <div class="note-row">
+        <div class="note-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="#2563eb" stroke-width="1.5"/>
+                <path d="M12 8v4M12 16h.01" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </div>
+        <div class="note-text">
+            {% if var in [1,2,3,4,9,10,11,12] %}
+                <p class="subtle"><strong>Reminder:</strong> report shows the <strong>monthly return.</strong> A monthly return measures the relative (%) change in an asset's price from the beginning of the current month to the end of the current month.</p>
+            {% elif var in [5,6,7,8,13,14,15,16] %}
+                <p class="subtle"><strong>Reminder:</strong> report shows the <strong>the return since purchase.</strong> A return since purchase measures the relative (%) change in an asset's price from the beginning of Month 1 to the end of the current month.</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+<input type="hidden" id="clicks" name="clicks"/>
+<input type="hidden" id="refresh_count_input" name="refresh_count"/>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+<script>
+
+//////////////////////////////
+// REFRESH COUNT TRACKING
+//////////////////////////////
+
+let round_number = js_vars.roundnumber;
+let participant_id = js_vars.participant_id;
+let page_identifier = "treatment_high_seq_text";
+
+function initializeOrUpdateRefreshCount() {
+
+    let uniqueKey = `${participant_id}_${page_identifier}_round_${round_number}`;
+    let refreshCount = localStorage.getItem(uniqueKey);
+
+    if (refreshCount) {
+        refreshCount = parseInt(refreshCount) + 1;
+    } else {
+        refreshCount = 1;
+    }
+
+    localStorage.setItem(uniqueKey, refreshCount.toString());
+    document.getElementById('refresh_count_input').value = refreshCount;
+}
+
+initializeOrUpdateRefreshCount();
+
+
+//////////////////////////////
+// CLICK TRACKING
+//////////////////////////////
+
+let click_string = "";
+
+function recordClick(label) {
+    click_string += label + "," + Date.now() + ";";
+    document.getElementById('clicks').value = click_string;
+    window.localStorage.setItem("clicks_backup", click_string);
+}
+
+// record page entry
+recordClick("enter");
+
+
+//////////////////////////////
+// MONTH DISPLAY LOGIC
+//////////////////////////////
+
+const assetA = js_vars.asset_a;
+const assetB = js_vars.asset_b;
+const colorTreatment = js_vars.color_treatment;
+
+let currentMonth = 0;
+
+function setColor(element, value) {
+    element.classList.remove("positive", "negative");
+
+    if (colorTreatment === 0) {
+        // Colored background (0 = colored)
+        if (value < 0) {
+            element.classList.add("negative");
+        } else {
+            element.classList.add("positive");
+        }
+    }
+    // If colorTreatment === 1 (neutral), don't add any color classes
+}
+
+function skipPage() {
+    recordClick("skip_testing");
+    document.querySelector("form").submit();
+}
+
+function renderMonth() {
+    const treatment = js_vars.goal_treatment;
+    if ([1,2,3,4,9,10,11,12].includes(treatment)) {
+        document.getElementById("monthTitle").innerText =
+            `Monthly return at the end of Month ${currentMonth + 1}`;
+    } else {
+        document.getElementById("monthTitle").innerText =
+            `Return since purchase at the end of Month ${currentMonth + 1}`;
+    }
+
+    let aVal = assetA[currentMonth];
+    let bVal = assetB[currentMonth];
+
+    let aEl = document.getElementById("assetAValue");
+    let bEl = document.getElementById("assetBValue");
+
+    aEl.innerText = (aVal > 0 ? "+" : "") + aVal + "%";
+    bEl.innerText = (bVal > 0 ? "+" : "") + bVal + "%";
+
+    setColor(aEl, aVal);
+    setColor(bEl, bVal);
+
+    recordClick("month_" + (currentMonth + 1));
+
+    if (currentMonth === 11) {
+        document.getElementById("nextMonthBtn").style.display = "none";
+        document.getElementById("finalNextBtn").style.display = "inline-block";
+    }
+}
+
+document.getElementById("nextMonthBtn").addEventListener("click", function () {
+
+    if (currentMonth < 11) {
+        currentMonth++;
+        renderMonth();
+    }
+});
+
+document.getElementById("finalNextBtn").addEventListener("click", function () {
+    recordClick("exit");
+});
+
+// initial render
+renderMonth();
+
+</script>
+
+{% endblock %}

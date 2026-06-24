@@ -1,0 +1,100 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Some words
+{% endblock %}
+
+
+{% block content %}
+
+{% include 'ME/ProgressPieChart.html' %}
+{% if testing %}
+    <br>
+    <button id="skipBtn" class="btn btn-secondary px-3" onclick="skipPage()" >
+    Skip for testing</button><br><br>
+{% endif %}
+
+
+
+
+<br>
+    <p style="text-align: center;">
+        Please type the following words into the space below:
+    </p>
+
+    <p id="wordsPrompt" style="text-align: center; position: relative; user-select: none;">
+        {{ insertWord }}<span style="position:absolute; left:-9999px;">, Honolulu</span>
+    </p>
+    <div class="words-input-wrap" style="display: flex; justify-content: center;">
+        <div>
+            {{ form.words }}
+            {% if form.words.errors %}
+                <div class="invalid-feedback" style="display: block; text-align: center;">{{ form.words.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+    <div style="text-align: center;">
+        <button class="otree-btn-next btn btn-primary">Next</button>
+    </div>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'ME/BaseDesign.css' %}"/>
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+<style>
+    .words-input-wrap {
+        margin-bottom: 16px;
+    }
+</style>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const wordsInput = document.querySelector('[name="words"]');
+    const wordsPrompt = document.getElementById('wordsPrompt');
+
+    if (wordsInput) {
+        wordsInput.setAttribute('autocomplete', 'off');
+
+        ['paste', 'drop'].forEach(function (eventName) {
+            wordsInput.addEventListener(eventName, function (event) {
+                event.preventDefault();
+            });
+        });
+
+        wordsInput.addEventListener('keydown', function (event) {
+            const key = event.key.toLowerCase();
+            const isPasteShortcut = (event.ctrlKey || event.metaKey) && key === 'v';
+            const isShiftInsert = event.shiftKey && event.key === 'Insert';
+            if (isPasteShortcut || isShiftInsert) {
+                event.preventDefault();
+            }
+        });
+    }
+
+    if (wordsPrompt) {
+        ['copy', 'cut', 'contextmenu', 'selectstart', 'dragstart'].forEach(function (eventName) {
+            wordsPrompt.addEventListener(eventName, function (event) {
+                event.preventDefault();
+            });
+        });
+    }
+});
+
+function skipPage() {
+    document.querySelector('[name="words"]').value = 'test test test';
+    document.querySelector('.otree-btn-next').click();
+}
+</script>
+
+{% endblock %}
+

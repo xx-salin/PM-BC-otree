@@ -1,0 +1,234 @@
+{% load staticfiles %}
+{% load otree_tags %}
+
+{% block title %}
+Investment decision (round {{player.round_number}} of {{Constants.num_rounds}})
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+
+<style>
+body { background: #f2f2f2; }
+
+.the-whole-space{
+    max-width: 900px;
+    width: 90%;
+    margin: 20px auto 40px auto;
+   
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    padding: 25px 0;
+}
+
+.header{
+    padding: 0 20px 15px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.month-title{ font-size: 20px; font-weight: 600; }
+.subtle{ font-size: 14px; color: #888; margin-top: 4px; }
+
+.info{
+    padding: 18px 20px;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.options-wrap{ padding: 0 20px 10px 20px; }
+
+.option-card{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 16px 14px;
+    margin: 12px 0;
+    cursor: pointer;
+    background: #fafafa;
+    transition: all 0.15s ease;
+}
+
+.option-left{ display:flex; flex-direction: column; gap: 3px; }
+.option-title{ font-size: 16px; font-weight: 650; }
+.option-sub{ font-size: 13px; color: #888; }
+
+.pill{
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 650;
+    font-size: 13px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    color: #111;
+}
+
+.option-card input[type="radio"]{ display:none; }
+
+.option-card.selected{
+    border-color: #16a34a;                 /* green border */
+    background: rgba(22,163,74,0.08);      /* light green background */
+    box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+}
+
+.option-card{
+    position: relative;
+    padding-right: 44px; /* leave room for check */
+}
+
+.option-card.selected::after{
+    content: "✓";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 800;
+    color: #16a34a;
+    font-size: 18px;
+}
+.err{
+    padding: 0 20px;
+    color: #dc2626;
+    font-size: 14px;
+    display:none;
+}
+
+.btn-area{ padding: 20px; text-align: center; }
+
+.next-btn{
+    background: #2563eb;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+}
+.next-btn:hover { opacity: 0.9; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% include 'ME/ProgressPieChart.html' %}
+
+{% if testing %}
+    <br>
+    <button id="skipBtn" class="btn btn-secondary px-3" onclick="skipPage()" >
+    Skip for testing</button><br><br>
+{% endif %}
+
+<form method="post" novalidate>
+
+<div class="the-whole-space">
+
+    <div class="header">
+        
+    <div > <br>
+            {% if is_sell %}
+                You have observed the performance of the two assets you held, Asset A and Asset B, over 12 months. Both assets are worth £100 at the end of Month 12. One of the assets needs to be liquidated (i.e., sold) because you need £100 in cash. The asset you do not sell (i.e., the asset you hold on to) will be invested for one more month.
+            {% else %}
+                You have observed the performance of the two assets you held, Asset A and Asset B, over 12 months. Both assets are worth £100 at the end of Month 12. Both assets have just been liquidated (i.e., sold) because you need some cash. You need £100 of the resulting cash, but you want to reinvest the remaining £100 into one of the two assets. The asset you repurchase (or buy again) will be invested for one more month.
+            {% endif %}
+    </div>
+    </div>
+
+    <div class="info">
+        {%if var in [1,3,5,7,9,11,13,15] %}
+        If this round is selected, your investment decision will determine your bonus payment.
+        <br><br>
+        {% endif %}
+        Which asset do you {% if is_sell %}<strong>sell</strong>{% else %}<strong>buy</strong>{% endif %}?
+    </div>
+
+    <div class="options-wrap">
+
+        <label class="option-card" id="cardA">
+            <div class="option-left">
+                <div class="option-title">Asset A</div>
+            </div>
+            <input type="radio" name="{% if is_sell %}AssetToSell{% else %}AssetToBuy{% endif %}" value="A">
+        </label>
+
+        <label class="option-card" id="cardB">
+            <div class="option-left">
+                <div class="option-title">Asset B</div>
+            </div>
+            <input type="radio" name="{% if is_sell %}AssetToSell{% else %}AssetToBuy{% endif %}" value="B">
+        </label>
+
+    </div>
+
+    <div class="err" id="errMsg">Please choose one asset to {% if is_sell %}sell{% else %}buy{% endif %}.</div>
+
+    <div class="btn-area">
+        <button type="submit" class="next-btn">Next</button>
+    </div>
+
+</div>
+
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+<script>
+function updateSelectionUI() {
+    const cardA = document.getElementById('cardA');
+    const cardB = document.getElementById('cardB');
+
+    const fieldName = js_vars.is_sell ? "AssetToSell" : "AssetToBuy";
+    const chosen = document.querySelector(`input[name="${fieldName}"]:checked`);
+
+    const aChecked = cardA.querySelector('input[type="radio"]').checked;
+    const bChecked = cardB.querySelector('input[type="radio"]').checked;
+
+    cardA.classList.toggle('selected', aChecked);
+    cardB.classList.toggle('selected', bChecked);
+
+    if (aChecked || bChecked) {
+        document.getElementById('errMsg').style.display = 'none';
+    }
+}
+
+document.getElementById('cardA').addEventListener('click', updateSelectionUI);
+document.getElementById('cardB').addEventListener('click', updateSelectionUI);
+
+document.querySelector('form').addEventListener('submit', function(e){
+    const fieldName = js_vars.is_sell ? "AssetToSell" : "AssetToBuy";
+    const chosen = document.querySelector(`input[name="${fieldName}"]:checked`);
+    if (!chosen) {
+        e.preventDefault();
+        document.getElementById('errMsg').style.display = 'block';
+    }
+});
+
+function skipPage(){
+
+    const round = js_vars.round_number;
+
+    let valueToSelect;
+
+    // odd rounds -> A, even rounds -> B
+    if (round % 2 === 1){
+        valueToSelect = "A";
+    } else {
+        valueToSelect = "B";
+    }
+
+    const fieldName = js_vars.is_sell ? "AssetToSell" : "AssetToBuy";
+    const radio = document.querySelector(
+        `input[name="${fieldName}"][value="${valueToSelect}"]`
+    );
+
+    if (radio){
+        radio.checked = true;
+    }
+
+    updateSelectionUI();   // highlight card
+    document.querySelector("form").submit();
+}
+</script>
+{% endblock %}

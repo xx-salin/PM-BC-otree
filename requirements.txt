@@ -1,0 +1,10 @@
+# oTree-may-not-overwrite-this-file
+
+otree>=6.0.14
+psycopg2-binary>=2.8
+sentry-sdk==1.0.0
+xlrd==1.2.0
+numpy
+openpyxl
+pandas
+Django==4.2.13

@@ -1,0 +1,68 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+What do you see?
+{% endblock %}
+
+
+
+{% block content %}
+{% include 'ME/ProgressPieChart.html' %}
+
+{% if testing %}
+    <br>
+    <button id="skipBtn" class="btn btn-secondary px-3" onclick="skipPage()" >
+    Skip for testing</button><br><br>
+{% endif %}
+
+
+
+
+
+<!-- Header -->
+            <div class="space-y-2">
+               
+                <p class="text-gray-600 text-lg text-center">
+                    Please consider this image and give us your first impression.
+                </p>
+            </div>
+
+    
+        <p>
+            <img src="{% static 'ME/can.png' %}" class="responsive-image" alt="can" width = 80% style="display: block; margin-left: auto; margin-right: auto;"/>
+        
+
+    
+    <div style="display: flex; justify-content: center;">
+        {% formfields %}
+    </div>
+
+
+
+    <div style="text-align: center;">
+        <button class="otree-btn-next btn btn-primary">Next</button>
+    </div>
+   
+{% endblock %}
+
+{% block styles %}
+
+<link rel="stylesheet" href="{% static 'ME/BaseDesign.css' %}"/>
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+
+<script>
+function skipPage() {
+    document.getElementById('id_can').value = 'RED';
+    document.querySelector('.otree-btn-next').click();
+}
+</script>
+
+{% endblock %}

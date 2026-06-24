@@ -1,0 +1,95 @@
+
+{% load otree static %}
+
+{% block title %}
+
+
+Screening Result
+{% endblock %}
+
+
+{% block content %}
+
+{% include 'ME/ProgressPieChart.html' %}
+
+    {% if player.checks == 1 %}
+    <div class="success-message">
+        <p style="text-align: center;">
+            Thanks! You are now ready to begin the survey.
+        </p>
+        <div class="checkmark">✔</div>
+        <p>
+            <br>
+            <br>
+        </p>
+
+        <p style="text-align: center;">
+          
+            <button class="otree-btn-next btn btn-primary">Next</button>
+        </p>
+    </div>
+    {% else %}
+    <div class="failure-message">
+        <p style="text-align: center;">
+            The study has terminated because you failed to pass the screening. <br>
+            Please make sure to return the study. <br><br>
+            Thank you!
+        </p>
+        <div class="cross">✘</div>
+    </div>
+    {% endif %}
+
+
+
+
+{% endblock %}
+
+{% block styles %}
+
+<link rel="stylesheet" href="{% static 'ME/BaseDesign.css' %}"/>
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+
+<style>
+    /* Custom CSS for success message */
+    .success-message {
+        border: 2px solid #d4edda;
+        background-color: #d4edda; /* Light green background */
+        color: #155724; /* Darker green text color */
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+        position: relative;
+    }
+    
+    .success-message .checkmark {
+        font-size: 50px;
+        color: #28a745; /* Green color for the checkmark */
+        margin-top: 10px;
+    }
+    
+    /* Custom CSS for failure message */
+    .failure-message {
+        border: 2px solid #f8d7da;
+        background-color: #f8d7da; /* Light red background */
+        color: #721c24; /* Darker red text color */
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+        position: relative;
+    }
+    
+    .failure-message .cross {
+        font-size: 50px;
+        color: #dc3545; /* Red color for the cross */
+        margin-top: 10px;
+    }
+</style>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+
+
+{% endblock %}

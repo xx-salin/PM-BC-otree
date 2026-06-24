@@ -1,0 +1,63 @@
+{% load otree static %}
+{% load otree_tags %}
+
+
+{% block title %}
+
+    Bot Screening
+{% endblock %}
+
+{% block content %}
+{% include 'ME/ProgressPieChart.html' %}
+<p style="text-align: center;">
+    Please click the box below to confirm that you are not a robot.
+</p>
+
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+    
+    <div class="g-recaptcha" 
+         data-sitekey="6Ld_izwoAAAAANB5cgcx190wf3VCrppLS067CzHW" 
+         data-callback="enableBtn">
+    </div>
+
+    <button class="otree-btn-next btn btn-primary" style="display: none">
+        Next
+    </button>
+
+</div>
+{% endblock %}
+
+{% block styles %}
+
+<link rel="stylesheet" href="{% static 'ME/BaseDesign.css' %}"/>
+
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+
+<script>
+
+        let otreeButton = document.getElementsByClassName("otree-btn-next btn btn-primary")[0];
+        function enableBtn(){
+            setTimeout(function(){otreeButton.style.display = 'block'}, 500);
+        }
+
+</script>
+
+<script src='https://www.google.com/recaptcha/api.js?explicit&hl=en'></script>
+
+
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+
+
+
+{% endblock %}
+
+
+

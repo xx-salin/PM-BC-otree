@@ -1,0 +1,139 @@
+
+{% load staticfiles otree_tags %}
+
+{% block title %}
+
+    Survey – 3 of 3
+{% endblock %}
+
+{% block content %}
+{% include 'ME/ProgressPieChart.html' %}
+{% if testing %}
+<br>
+<button id="skipBtn"  class="btn btn-secondary px-3" onclick="skipPage()" >
+Skip for testing</button><br><br>
+{% endif %}
+    <p>
+        Please answer the following concluding questions.
+    </p>
+
+    <p>
+    {% for field in form %}
+    <div class="form-group">
+        {% formfield field %}
+        {% if field.name == "Age" %}
+        <span id="{{ field.name }}Error" style="color: red; display: none;">Please enter a valid age less than 130.</span>
+        {% else %}
+        <span id="{{ field.name }}Error" style="color: red; display: none;">Please select an option.</span>
+        {% endif %}
+    </div>
+    {% endfor %}
+    </p>
+
+    <p>
+        <button id="nextButton" type="button" class="otree-btn-next btn btn-primary">Next</button>
+    </p>
+
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'ME/BaseDesign.css' %}"/>
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const nextButton = document.getElementById('nextButton');
+        const ageInput = document.querySelector('input[name="Age"]');
+        const ageError = document.getElementById('AgeError');
+
+        const radioGroups = [
+            'Sex',
+            'FinInterest',
+            'Investor',
+            'FinanceProf',
+            'RiskAffinity',
+        ];
+
+        function validateAge() {
+            const age = parseInt(ageInput.value, 10);
+            if (isNaN(age) || age <= 0 || age >= 130) {
+                ageError.style.display = 'inline';
+                return false;
+            } else {
+                ageError.style.display = 'none';
+                return true;
+            }
+        }
+
+        function validateRadioGroup(name) {
+            const radios = document.getElementsByName(name);
+            const errorElement = document.getElementById(name + 'Error');
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    errorElement.style.display = 'none';
+                    return true;
+                }
+            }
+            errorElement.style.display = 'inline';
+            return false;
+        }
+
+        function validateForm() {
+            let valid = validateAge();
+            for (let i = 0; i < radioGroups.length; i++) {
+                valid = validateRadioGroup(radioGroups[i]) && valid;
+            }
+            return valid;
+        }
+
+        nextButton.addEventListener('click', function(event) {
+            if (!validateForm()) {
+                event.preventDefault();
+            } else {
+                form.submit();
+            }
+        });
+
+        form.addEventListener('submit', function(event) {
+            if (!validateForm()) {
+                event.preventDefault();
+            }
+        });
+
+        ageInput.addEventListener('input', function() {
+            validateAge();
+        });
+
+        radioGroups.forEach(group => {
+            const radios = document.getElementsByName(group);
+            radios.forEach(radio => {
+                radio.removeAttribute('required'); // Remove the 'required' attribute
+                radio.addEventListener('change', function() {
+                    validateRadioGroup(group);
+                });
+            });
+        });
+    });
+</script>
+
+    <script>
+ function skipPage() {
+        document.querySelector('input[name="Age"]').value = 30;
+        document.querySelector('input[name="Sex"]').checked = true;
+        document.querySelector('input[name="FinInterest"]').checked = true;
+        document.querySelector('input[name="Investor"]').checked = true;
+        document.querySelector('input[name="FinanceProf"]').checked = true;
+        document.querySelector('input[name="RiskAffinity"]').checked = true;
+        document.querySelector('form').submit();
+   
+    }
+    </script>
+
+{% endblock %}
+

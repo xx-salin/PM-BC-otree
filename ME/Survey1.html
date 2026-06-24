@@ -1,0 +1,121 @@
+
+{% load staticfiles otree_tags %}
+
+{% block title %}
+
+    Survey – 1 of 3
+{% endblock %}
+
+{% block content %}
+{% include 'ME/ProgressPieChart.html' %}
+{% if testing %}
+    <br>
+    <button id="skipBtn" class="btn btn-secondary px-3" onclick="skipPage()" >
+    Skip for testing</button>
+{% endif %}
+<p>
+    {% for field in form %}
+   
+    <div class="form-group">
+        
+        <label >{{ field.label }}</label>
+        {{ field }}
+        <small style="display: block; margin-top: 8px; color: #666;">
+            Please provide an answer of at least 50 characters.
+        </small>
+        <span id="textAreaError" style="color: red; display: none;">This field cannot be left blank.</span>
+    </div>
+   
+    {% endfor %}
+</p>
+
+<p>
+    <p>
+        <button id="nextButton" type="button" class="otree-btn-next btn btn-primary" >Next</button>
+    </p>
+</p>
+
+
+
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'ME/BaseDesign.css' %}"/>
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+<style>
+    textarea {
+        width: 300px;
+        height: 150px;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical; /
+    }
+</style>
+
+{% endblock %}
+
+ 
+{% block scripts %}
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const textArea = document.querySelector('textarea');
+    const textAreaError = document.getElementById('textAreaError');
+    const form = document.querySelector('form');
+    const nextButton = document.getElementById('nextButton');
+
+    function handleInputChange(input) {
+        const now = performance.now();
+
+        // 🔥 send typing timing
+        if (typeof liveSend === "function") {
+            liveSend(now);
+        }
+
+        // ✅ 50-character rule
+        if (input.value.trim().length >= 50) {
+            nextButton.disabled = false;
+            textAreaError.style.display = 'none';
+        } else {
+            nextButton.disabled = true;
+        }
+    }
+
+    function validateTextArea() {
+        if (textArea.value.trim().length < 50) {
+            textAreaError.innerText = "Please enter at least 50 characters.";
+            textAreaError.style.display = 'inline';
+            return false;
+        }
+        return true;
+    }
+
+    nextButton.addEventListener('click', function(event) {
+        if (validateTextArea()) {
+            form.submit();
+        } else {
+            event.preventDefault();
+        }
+    });
+
+    textArea.addEventListener('input', function() {
+        handleInputChange(this);
+    });
+
+    function skipPage() {
+        textArea.value = 'This is a test input with more than fifty characters to pass validation.';
+        form.submit();
+    }
+
+    window.skipPage = skipPage;
+
+    // 🔥 initialize state
+    handleInputChange(textArea);
+});
+</script>
+{% endblock %}
+

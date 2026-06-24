@@ -1,0 +1,376 @@
+{% load staticfiles %}
+{% load otree_tags %}
+
+{% block title %}
+Return predictions (round {{player.round_number}} of {{Constants.num_rounds}})
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+
+<style>
+body { background: #f2f2f2; }
+
+.the-whole-space {
+    max-width: 900px;
+    width: 90%;
+    margin: 20px auto 40px auto;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    padding: 25px 0;
+    background: #fff;
+}
+
+.header {
+    padding: 0 20px 15px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.month-title { font-size: 20px; font-weight: 600; }
+.subtle { font-size: 14px; color: #888; margin-top: 4px; }
+
+.info {
+    padding: 18px 20px;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.questions-wrap { padding: 0 20px 10px 20px; }
+
+.question-card {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 20px 18px;
+    margin: 16px 0;
+    background: #fafafa;
+}
+
+.question-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-field {
+    width: 160px;
+    padding: 10px 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.2s ease;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+
+.pct-label {
+    font-size: 15px;
+    color: #555;
+}
+
+.slider-container { margin: 10px 0 4px 0; }
+
+.slider-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: #e5e7eb;
+    outline: none;
+    cursor: pointer;
+    display: block;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #2563eb;
+    border: 2px solid #2563eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #2563eb;
+    border: 2px solid #2563eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.slider.touched::-webkit-slider-thumb {
+    opacity: 1;
+}
+
+.slider.touched::-moz-range-thumb {
+    opacity: 1;
+}
+
+.err {
+    padding: 0 20px 10px 20px;
+    color: #dc2626;
+    font-size: 14px;
+    display: none;
+}
+
+.field-err {
+    color: #dc2626;
+    font-size: 13px;
+    display: none;
+    margin-top: 6px;
+}
+
+.btn-area { padding: 20px; text-align: center; }
+
+.next-btn {
+    background: #2563eb;
+    border: none;
+    padding: 10px 28px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.next-btn:hover { opacity: 0.9; }
+
+.required-asterisk { color: #dc2626; font-weight: bold; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% include 'ME/ProgressPieChart.html' %}
+
+{% if testing %}
+    <br>
+    <button id="skipBtn" class="btn btn-secondary px-3" onclick="skipPage()">
+        Skip for testing
+    </button><br><br>
+{% endif %}
+
+<div class="the-whole-space">
+
+   
+
+    <div class="info">
+        Please answer the following questions about your expectations for next month's returns:
+        <br><br>
+        {% if var in [2,4,6,8,10,12,14,16] %}
+        If this round is selected, one of the return predictions (chosen at random) will determine your bonus payment.
+        {% endif %}
+    </div>
+
+    <form method="post">
+
+        <div class="questions-wrap">
+
+            <!-- Prediction A -->
+            <div class="question-card">
+                <div class="question-title">
+                    What do you expect the monthly return of Asset A to be next month?
+                    <span class="required-asterisk">*</span>
+                </div>
+                <div class="input-row">
+                    <input type="number" name="PredictionA" id="PredictionA"
+                           class="input-field"
+                           min="-100" max="100" step="0.1"
+                           placeholder="e.g. 5">
+                    <span class="pct-label">%</span>
+                </div>
+                <span class="field-err" id="err-PredictionA">
+                    Please enter a value between -100 and 100.
+                </span>
+            </div>
+
+            <!-- Prediction B -->
+            <div class="question-card">
+                <div class="question-title">
+                    What do you expect the monthly return of Asset B to be next month?
+                    <span class="required-asterisk">*</span>
+                </div>
+                <div class="input-row">
+                    <input type="number" name="PredictionB" id="PredictionB"
+                           class="input-field"
+                           min="-100" max="100" step="0.1"
+                           placeholder="e.g. 5">
+                    <span class="pct-label">%</span>
+                </div>
+                <span class="field-err" id="err-PredictionB">
+                    Please enter a value between -100 and 100.
+                </span>
+            </div>
+
+            <!-- Risk A -->
+            <div class="question-card">
+                <div class="question-title">
+                    How risky is Asset A? <span class="required-asterisk">*</span>
+                </div>
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <span>Not risky at all</span>
+                        <span>Very risky</span>
+                    </div>
+                    <input type="range" id="RiskA-visual" class="slider" min="0" max="10" step="0.01">
+                    <input type="hidden" name="RiskA" id="RiskA" value="">
+                </div>
+                <span class="field-err" id="err-RiskA">Please move the slider.</span>
+            </div>
+
+            <!-- Risk B -->
+            <div class="question-card">
+                <div class="question-title">
+                    How risky is Asset B? <span class="required-asterisk">*</span>
+                </div>
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <span>Not risky at all</span>
+                        <span>Very risky</span>
+                    </div>
+                    <input type="range" id="RiskB-visual" class="slider" min="0" max="10" step="0.01">
+                    <input type="hidden" name="RiskB" id="RiskB" value="">
+                </div>
+                <span class="field-err" id="err-RiskB">Please move the slider.</span>
+            </div>
+
+            <!-- Confidence -->
+            <div class="question-card">
+                <div class="question-title">
+                    How confident are you about your predictions?
+                    <span class="required-asterisk">*</span>
+                </div>
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <span>Not confident at all</span>
+                        <span>Very confident</span>
+                    </div>
+                    <input type="range" id="Confidence-visual" class="slider" min="0" max="10" step="0.01">
+                    <input type="hidden" name="Confidence" id="Confidence" value="">
+                </div>
+                <span class="field-err" id="err-Confidence">Please move the slider.</span>
+            </div>
+
+        </div>
+
+        <div class="err" id="errMsg">Please answer all required questions.</div>
+
+        <div class="btn-area">
+            <button type="submit" class="next-btn">Next</button>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+<script>
+
+const sliderTouched = { RiskA: false, RiskB: false, Confidence: false };
+
+function setSliderTrack(visualSlider) {
+    const min = parseFloat(visualSlider.min) || 0;
+    const max = parseFloat(visualSlider.max) || 10;
+    const val = parseFloat(visualSlider.value) || 0;
+    const pct = ((val - min) / (max - min)) * 100;
+    visualSlider.style.background =
+        `linear-gradient(to right, #2563eb ${pct}%, #e5e7eb ${pct}%)`;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    ['RiskA', 'RiskB', 'Confidence'].forEach(function (name) {
+        const visual = document.getElementById(name + '-visual');
+        const hidden = document.getElementById(name);
+
+        visual.addEventListener('input', function () {
+            sliderTouched[name] = true;
+            visual.classList.add('touched');
+            setSliderTrack(visual);
+            hidden.value = visual.value;
+            document.getElementById('err-' + name).style.display = 'none';
+            document.getElementById('errMsg').style.display = 'none';
+        });
+    });
+});
+
+document.querySelector('form').addEventListener('submit', function (e) {
+    let valid = true;
+
+    ['PredictionA', 'PredictionB'].forEach(function (name) {
+        const input = document.getElementById(name);
+        const err   = document.getElementById('err-' + name);
+        const val   = input.value.trim();
+        if (val === '' || parseFloat(val) < -100 || parseFloat(val) > 100) {
+            err.style.display = 'block';
+            valid = false;
+        } else {
+            err.style.display = 'none';
+        }
+    });
+
+    ['RiskA', 'RiskB', 'Confidence'].forEach(function (name) {
+        const err = document.getElementById('err-' + name);
+        if (!sliderTouched[name]) {
+            err.style.display = 'block';
+            valid = false;
+        } else {
+            err.style.display = 'none';
+        }
+    });
+
+    if (!valid) {
+        e.preventDefault();
+        document.getElementById('errMsg').style.display = 'block';
+    }
+});
+
+function skipPage() {
+    const roundNum = js_vars.round_number;
+    document.getElementById('PredictionA').value = roundNum;
+    document.getElementById('PredictionB').value = roundNum;
+
+    ['RiskA', 'RiskB', 'Confidence'].forEach(function (name) {
+        const visual = document.getElementById(name + '-visual');
+        const hidden = document.getElementById(name);
+        visual.value = roundNum;
+        hidden.value = roundNum;
+        visual.classList.add('touched');
+        sliderTouched[name] = true;
+        setSliderTrack(visual);
+    });
+
+    document.querySelector('form').submit();
+}
+</script>
+{% endblock %}

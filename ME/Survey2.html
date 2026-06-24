@@ -1,0 +1,150 @@
+
+{% load staticfiles otree_tags %}
+
+
+{% block title %}
+
+    Survey – 2 of 3
+{% endblock %}
+
+{% block content %}
+{% include 'ME/ProgressPieChart.html' %}
+{% if testing %}
+    <br>
+    <button id="skipBtn"  class="btn btn-secondary px-3" onclick="skipPage()" >
+    Skip for testing</button>
+{% endif %}
+
+<div style="margin-top: 24px;">
+{% if var == 1 or var == 3 or var == 5 or var == 7 or var == 9 or var == 11 or var == 13 or var == 15 %}
+    <p>When making your investment decision...</p>
+{% else %}
+    <p>When making your return prediction...</p>
+{% endif %}
+</div>
+    <p>
+    {% for field in form %}
+    <div class="form-group">
+    {% if field.name == 'Recency' %}
+    <label class="recency-label">
+        Did you rely more on the performance of the assets during
+        <strong>the first half (Months 1-6)</strong><br>
+        or <strong>the second half (Months 7-12)</strong> of the year?
+    </label>
+    {{ field }}
+    {% else %}
+    {% formfield field %}
+    {% endif %}
+    <span id="{{ field.name }}Error" style="color: red; display: none;">Please select an option.</span>
+</div>
+    {% endfor %}
+
+    </p>
+
+    <p>
+        <button id="nextButton" type="button" class="otree-btn-next btn btn-primary">Next</button>
+
+    </p>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'ME/BaseDesign.css' %}"/>
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+<style>
+    .recency-label {
+        display: block;
+        margin-bottom: 8px;
+        line-height: 1.5;
+    }
+</style>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const nextButton = document.getElementById('nextButton');
+        const radioGroups = [
+            'MuM',
+            'MuC',
+            'LastRetM',
+            'LastRetC',
+            'Outperform',
+            'Riskiness',
+            'Recency'
+        ];
+
+        function validateRadioGroup(name) {
+            const radios = document.getElementsByName(name);
+            const errorElement = document.getElementById(name + 'Error');
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    errorElement.style.display = 'none';
+                    return true;
+                }
+            }
+            errorElement.style.display = 'inline';
+            return false;
+        }
+
+        function validateForm() {
+            let valid = true;
+            for (let i = 0; i < radioGroups.length; i++) {
+                valid = validateRadioGroup(radioGroups[i]) && valid;
+            }
+            return valid;
+        }
+
+        nextButton.addEventListener('click', function(event) {
+            if (!validateForm()) {
+                event.preventDefault();
+            } else {
+                form.submit();
+            }
+        });
+
+        form.addEventListener('submit', function(event) {
+            if (!validateForm()) {
+                event.preventDefault();
+            }
+        });
+
+        radioGroups.forEach(group => {
+            const radios = document.getElementsByName(group);
+            radios.forEach(radio => {
+                radio.removeAttribute('required'); // Remove the 'required' attribute
+                radio.addEventListener('change', function() {
+                    validateRadioGroup(group);
+                });
+            });
+        });
+    });
+
+    </script>
+    <script>
+
+    function skipPage() {
+        const radioGroups = [
+            'MuM',
+            'MuC',
+            'LastRetM',
+            'LastRetC',
+            'Outperform',
+            'Riskiness',
+            'Recency'
+        ];
+        radioGroups.forEach(group => {
+            const firstOption = document.querySelector(`input[name="${group}"]`);
+            if (firstOption) {
+                firstOption.checked = true;
+            }
+        });
+        document.querySelector('form').submit();
+
+    }
+    </script>
+
+{% endblock %}

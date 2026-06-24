@@ -1,0 +1,8 @@
+env/
+screenshots/
+tmp_capture/
+pycache/
+.pyc
+db.sqlite3
+Thumbs.db
+.zip

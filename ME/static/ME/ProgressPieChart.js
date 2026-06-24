@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.progress-container {
+  margin: 0 auto; /* Center the container */
+  
+  z-index: 1000;
+  width: 100%;
+}
+.progress {
+  height: 20px; /* Adjust the height as needed */
+  
+}
+
+.progress-bar {
+  background-color: #007bff; /* Color of the progress bar */
+}
+
+.progress-info {
+  display: flex;
+  justify-content: center; /* Center the text within the container */
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.progress-percentage {
+  font-weight: bold;
+  color: #007bff; /* Same color as progress bar */
+}
+
+.progress-pages {
+  font-weight: bold;
+  color: #007bff; /* Same color as progress bar */
+  font-size: 20px; /* Ensure the font size matches */
+}

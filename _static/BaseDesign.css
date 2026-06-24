@@ -1,0 +1,196 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #fff; /* Background set to white */
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+main {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+form {
+    background-color: #f5f5f5; /* Form background set to gray */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    position: relative; /* Needed for the custom radio button */
+}
+
+/* Hide the default radio button, but keep it focusable */
+input[type="radio"].form-check-input {
+    opacity: 0;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    z-index: -1;
+}
+
+/* Custom checkbox */
+input[type="radio"].form-check-input + label::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 2px solid #0B5ED7;
+    background-color: #fff;
+    vertical-align: middle;
+    border-radius: 4px; /* Make the corners square */
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for custom checkbox */
+input[type="radio"].form-check-input + label:hover::before {
+    border-color: #084298; /* Darker blue border on hover */
+    background-color: #cfe2ff; /* Light blue background on hover */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow on hover */
+}
+
+/* Checkmark (hidden by default) */
+input[type="radio"].form-check-input:checked + label::before {
+    background-color: #0B5ED7;
+    content: "\2713"; /* Unicode checkmark symbol */
+    color: #fff;
+    text-align: center;
+    line-height: 20px;
+}
+
+
+
+p{
+    text-align: justify;
+}
+
+
+/* Modal styles specific to this page */
+.custom-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+    animation: fadeIn 0.5s; /* Fade in animation */
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.custom-modal .modal-content {
+    background-color: #fff5f5; /* Very light red background color */
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    animation: slideIn 0.5s; /* Slide in animation */
+}
+
+@keyframes slideIn {
+    from {transform: translateY(-50px);}
+    to {transform: translateY(0);}
+}
+
+.custom-modal .close {
+    color: #f44336; /* Red color */
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.custom-modal .close:hover,
+.custom-modal .close:focus {
+    color: #d32f2f; /* Darker red on hover */
+    text-decoration: none;
+}
+
+.custom-modal .modal-content p {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.custom-modal .modal-content h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.custom-modal .modal-content button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: #7ECA94; /* Green background color */
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.custom-modal .modal-content button:hover {
+    background-color: #28a745; /* Darker green on hover */
+}
+
+.beliefs-choice {
+    margin-bottom: 2px; /* Adjust this value as needed */
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: center;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+td {
+    background-color: #fff;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+button {
+    margin-top: 20px;
+}

@@ -1,0 +1,208 @@
+
+{% load otree_tags %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'ME/BaseDesign.css' %}"/>
+<link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+<style type="text/css">
+
+    .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin: 18px 0 8px;
+    }
+
+    .return-image {
+      width: 100%;
+      height: auto;
+      max-width: 600px;
+      border-radius: 14px;
+      box-shadow: 0 16px 36px rgba(19, 39, 71, 0.12);
+    }
+
+    .return-explanation {
+      max-width: 720px;
+      margin: 22px auto 16px;
+      padding: 18px 22px;
+      background: linear-gradient(180deg, #f7fbff 0%, #eef5ff 100%);
+      border: 1px solid #d9e7fb;
+      border-radius: 14px;
+      box-shadow: 0 10px 24px rgba(47, 109, 179, 0.08);
+      text-align: left;
+    }
+
+    .return-explanation-title {
+      margin: 0 0 12px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #2f6db3;
+    }
+
+    .return-explanation-item {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 10px 0;
+    }
+
+    .return-explanation-item + .return-explanation-item {
+      border-top: 1px solid #d9e7fb;
+    }
+
+    .return-label {
+      font-weight: 700;
+      color: #17325c;
+    }
+
+    .return-text {
+      color: #24384f;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 500px) {
+      .return-image {
+        max-width: 100%;
+      }
+
+      .return-explanation-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
+
+</style>
+{% endblock %}
+
+{% block title %}
+
+
+
+Instructions
+{% endblock title %}
+
+{% block content %}
+{% include 'ME/ProgressPieChart.html' %}
+{% if testing %}
+    <br>
+    <button id="skipBtn" class="btn btn-secondary px-3" onclick="skipPage()" >
+    Skip for testing</button><br><br>
+{% endif %}
+
+    
+    <p>
+   
+    
+    <p style="text-align: justify;">
+      You will invest into two assets, Asset A and Asset B, at the beginning of each round. You will then hold both assets for 12 months, observing their performance at the end of each month, as illustrated in the example below.
+
+    {% if player.goal_treatment in [1,2,3,4,9,10,11,12]  %}
+      <p style="text-align: justify;">
+      The rows show the monthly returns of the two assets at the end of a given month. You will observe the monthly returns for both assets over 12 months, moving from Month 1 to Month 12 by clicking ‘Next month’.
+      </p>
+
+      {% if color_treatment == 0 %}
+      <div class="image-container">
+        <img src="{% static 'ME/MonthlyReturns.PNG' %}" alt="Return chart example" class="return-image"  width = 50% style="display: block; margin-left: auto; margin-right: auto;" />
+      </div>
+      {% else %}
+      <div class="image-container">
+        <img src="{% static 'ME/MonthlyReturnsNC.PNG' %}" alt="Return chart example" class="return-image"  width = 50% style="display: block; margin-left: auto; margin-right: auto;" />
+      </div>
+      {% endif %}
+      
+    {% elif player.goal_treatment in [5,6,7,8,13,14,15,16]  %}
+        <p style="text-align: justify;">
+        The rows show the returns since purchase of the two assets at the end of a given month. You will observe the returns since purchase for both assets over 12 months, moving from Month 1 to Month 12 by clicking ‘Next month’.
+        </p> 
+
+        {% if color_treatment == 0 %}
+        <div class="image-container">
+          <img src="{% static 'ME/CumulativeReturns.PNG' %}" alt="Return chart example" class="return-image"  width = 50% style="display: block; margin-left: auto; margin-right: auto;" />
+        </div>
+        {% else %}
+        <div class="image-container">
+          <img src="{% static 'ME/CumulativeReturnsNC.PNG' %}" alt="Return chart example" class="return-image"  width = 50% style="display: block; margin-left: auto; margin-right: auto;" />
+        </div>
+
+        {% endif %}
+
+
+
+  
+      {% endif %}
+     
+      
+      <br>
+
+      <div class="return-explanation">
+        <p class="return-explanation-title">HOW TO INTERPRET RETURNS</p>
+        <div class="return-text">There are two return types commonly used to report monthly asset performance:</div>
+        <div class="return-explanation-item">
+          <div class="return-label">Monthly return</div>
+          <div class="return-text">A monthly return measures the relative (%) change in an asset's price from the beginning of the current month to the end of the current month. E.g., a monthly return of 10% for an asset with a price of £110 at the beginning of the current month implies a price of £121 (= £110 × (1 + 10%)) at the end of the current month.</div>
+        </div>
+        <div class="return-explanation-item">
+          <div class="return-label"> Return since purchase</div>
+          <div class="return-text">A return since purchase measures the relative (%) change in an asset's price from the beginning of Month 1 (time of purchase) to the end of the current month. E.g., a return since purchase of 21% for an asset with a price of £100 at the beginning of Month 1 implies a price of £121 (= £100 × (1 + 21%)) at the end of the current month.</div>
+        </div>
+      </div>
+      
+    
+    
+      
+    
+  
+    </p>
+
+    {% if player.goal_treatment in [1,2,3,4,9,10,11,12]  %}
+    <p>
+      As explained for the illustration above, you will see <strong>monthly returns</strong>.
+    {% elif player.goal_treatment in [5,6,7,8,13,14,15,16]  %}
+    <p>
+      As explained for the illustration above, you will see <strong>returns since purchase</strong>.
+    </p>
+    {% endif %}
+
+
+    
+    {% if player.goal_treatment in [1,3,5,7,9,11,13,15]  %}
+    <p>
+      After observing the performance of both assets for 12 months, at the end of Month 12, you will make an investment decision.
+    </p>
+
+    </p>On the next screen, you will receive instructions on that investment decision and how it determines your bonus payment.</p>
+    {% elif player.goal_treatment in [2,4,6,8,10,12,14,16]  %}
+    <p>
+      After observing the performance of both assets for 12 months, at the end of Month 12, you will make a return prediction.
+    </p>
+    </p>On the next screen, you will receive instructions on that return prediction and how it determines your bonus payment.</p>
+    {% endif %}
+    
+    <div class="custom-next-button-container" style="text-align: center;">
+        <div>
+            <button class="otree-btn-next btn btn-primary" style="display: inline-block; margin: auto;">Next</button>
+        </div>
+    </div>
+    
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function skipPage() {
+   
+    document.querySelector('.otree-btn-next').click();
+}
+</script>
+
+<script src="{% static 'ME/ProgressPieChart.js' %}"></script>
+
+<script>
+     window.localStorage.clear()
+</script>
+{% endblock %}
+
+
