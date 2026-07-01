@@ -299,49 +299,46 @@ Skip for testing</button>
                 saveIncorrectSubmissions();
 
                     var errorMessage;
-                    
-
-                    
 
                     switch (variable_for_2) {
                         case 1:
-                        case 9:    
-                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 MONTHLY returns for both assets. You will be asked to SELL one asset and keep the other for one more month. One random monthly return will be drawn from the asset you kept, and your bonus will be 1 × (1 + return%).`;
+                        case 9:
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 MONTHLY returns for the investment asset. You will be asked to either SELL the investment asset (move to cash) or keep it for one more month. If you keep it, one random monthly return will be drawn and your bonus will be 1 × (1 + return%); if you move to cash, your bonus is 1 × (1 + 0%).`;
                             break;
 
                         case 2:
                         case 10:
-                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 MONTHLY returns for both assets. You will be asked to PREDICT the next month return for each asset. If your prediction is within ±0.3% of the statistically correct expected return for Month 13, you receive £2.`;
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 MONTHLY returns for the investment asset. You will be asked to PREDICT its next month return. If your prediction is within ±0.3% of the statistically correct expected return for Month 13, you receive £2.`;
                             break;
 
                         case 3:
                         case 11:
-                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 MONTHLY returns for both assets. You will be asked to REPURCHASE one asset and keep it for one more month. One random monthly return will be drawn from the asset you bought, and your bonus will be 1 × (1 + return%).`;
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 MONTHLY returns for the investment asset. You will be asked to either REPURCHASE the investment asset or keep your £100 in the cash account for one more month. If you repurchase, one random monthly return will be drawn and your bonus will be 1 × (1 + return%); if you keep cash, your bonus is 1 × (1 + 0%).`;
                             break;
 
                         case 4:
                         case 12:
-                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 MONTHLY returns for both assets. You will be asked to PREDICT the next month return for each asset. If your prediction is within ±0.3% of the statistically correct expected return for Month 13, you receive £2.`;
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 MONTHLY returns for the investment asset. You will be asked to PREDICT its next month return. If your prediction is within ±0.3% of the statistically correct expected return for Month 13, you receive £2.`;
                             break;
 
                         case 5:
                         case 13:
-                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 RETURNS SINCE PURCHASE for both assets. You will be asked to SELL one asset and keep the other for one more month. One random monthly return will be drawn from the asset you kept, and your bonus will be 1 × (1 + return%).`;
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 RETURNS SINCE PURCHASE for the investment asset. You will be asked to either SELL the investment asset (move to cash) or keep it for one more month. If you keep it, one random monthly return will be drawn and your bonus will be 1 × (1 + return%); if you move to cash, your bonus is 1 × (1 + 0%).`;
                             break;
 
                         case 6:
                         case 14:
-                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 RETURNS SINCE PURCHASE for both assets. You will be asked to PREDICT the next month return for each asset. If your prediction is within ±0.3% of the statistically correct expected return for Month 13, you receive £2.`;
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 RETURNS SINCE PURCHASE for the investment asset. You will be asked to PREDICT its next month return. If your prediction is within ±0.3% of the statistically correct expected return for Month 13, you receive £2.`;
                             break;
 
                         case 7:
                         case 15:
-                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 RETURNS SINCE PURCHASE for both assets. You will be asked to REPURCHASE one asset and keep it for one more month. One random monthly return will be drawn from the asset you bought, and your bonus will be 1 × (1 + return%).`;
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 RETURNS SINCE PURCHASE for the investment asset. You will be asked to either REPURCHASE the investment asset or keep your £100 in the cash account for one more month. If you repurchase, one random monthly return will be drawn and your bonus will be 1 × (1 + return%); if you keep cash, your bonus is 1 × (1 + 0%).`;
                             break;
 
                         case 8:
                         case 16:
-                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 RETURNS SINCE PURCHASE for both assets. You will be asked to PREDICT the next month return for each asset. If your prediction is within ±0.3% of the statistically correct expected return for Month 13, you receive £2.`;
+                            errorMessage = `One or more answers are incorrect. Please review your answers. Hint: You will see 12 RETURNS SINCE PURCHASE for the investment asset. You will be asked to PREDICT its next month return. If your prediction is within ±0.3% of the statistically correct expected return for Month 13, you receive £2.`;
                             break;
 
                         default:

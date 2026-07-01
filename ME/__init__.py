@@ -177,7 +177,7 @@ class Player(BasePlayer):
     # Comprehension
     # -------------------------------------
     question_1 = models.IntegerField(
-        label='How many returns will you see for each asset?',
+        label='How many returns will you see for the investment asset?',
         choices=[
             [0, 'Six'],
             [1, 'Twelve'],
@@ -186,7 +186,7 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect(),
     )
     question_2 = models.IntegerField(
-        label='What type of returns will you see for the asset?',
+        label='What type of returns will you see for the investment asset?',
         choices=[
             [0, 'Monthly returns'],
             [1, 'Returns since purchase'],
@@ -197,7 +197,7 @@ class Player(BasePlayer):
 
     
     question_3 = models.IntegerField(
-        label='After observing 12 months of asset performance for Assets A and B, you will make… ...',
+        label='After observing 12 months of the investment asset\'s performance, you will make… ...',
         choices=[
 
             [0, 'A sales decision'],
@@ -209,12 +209,12 @@ class Player(BasePlayer):
     question_4 = models.IntegerField(
     label='How is your bonus payment calculated?',
     choices=[
-        [0, 'A return for the asset I choose to not sell (i.e., hold on to) '
-            'will be simulated. I will receive a bonus based on that return.'],
-        [1, 'A return for the asset I choose to repurchase (or buy again) '
-            'will be simulated. I will receive a bonus based on that return.'],
-        [2, 'The statistically correct expected value for the asset\'s monthly return will be used as a benchmark.\n '
-            'I will receive a bonus based on how close my chosen return prediction is to this value.'],
+        [0, 'If I keep the investment asset, a return is simulated and my bonus is based on it. '
+            'If I sell and move money to the cash account, my bonus is fixed at risk free 0% interest.'],
+        [1, 'If I repurchase the investment asset, a return is simulated and my bonus is based on it. '
+            'If I keep all money in the cash account, my bonus is fixed at risk free 0% interest.'],
+        [2, 'The statistically correct expected value for the Investment Asset\'s monthly return will be used as a benchmark.\n '
+            'I will receive a bonus based on how close my prediction is to this value.'],
     ],
     widget=widgets.RadioSelect(),
 )

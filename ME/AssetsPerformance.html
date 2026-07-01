@@ -317,10 +317,10 @@ function renderMonth() {
     let bEl = document.getElementById("assetBValue");
 
     aEl.innerText = (aVal > 0 ? "+" : "") + aVal + "%";
-    bEl.innerText = (bVal > 0 ? "+" : "") + bVal + "%";
+    bEl.innerText = bVal + "%";
 
     setColor(aEl, aVal);
-    setColor(bEl, bVal);
+    bEl.classList.add("neutral");
 
     recordClick("month_" + (currentMonth + 1));
 
