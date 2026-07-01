@@ -116,29 +116,21 @@ Bonus payment information
 
 {% if var in [1,2,9,10] %}
 <p>
-    After seeing the 12 months with monthly returns of Asset A and Asset B, 
-    you will be asked to sell one of the assets. The asset you sell will be sold at the end of Month 12, and the other asset will be held for another month (Month 13).
-    
+    After seeing the 12 monthly returns of the investment asset, you will decide whether to keep the asset or sell it and move to the £100 cash account. Whatever you keep invested is held for another month (Month 13).
 </p>
 
 {% elif var in [3,4,11,12] %}
 <p>
-    After seeing the 12 months with monthly returns of Asset A and Asset B, both assets are liquidated at the end of Month 12.
-    You will be asked to repurchase (i.e., buy again) one of the assets. That asset will be held for another month (Month 13).
+    After seeing the 12 monthly returns of the investment asset, your portfolio is liquidated at the end of Month 12. You will decide whether to repurchase the asset or keep your £100 in the cash account. Whatever you invest is held for another month (Month 13).
 </p>
 {% elif var in [5,6,13,14] %}
 <p>
-    After seeing the 12 months with returns since purchase of Asset A and Asset B, 
-    you will be asked to sell one of the assets. The asset you sell will be sold at the end of Month 12, and the other asset will be held for another month (Month 13).
+    After seeing the 12 returns since purchase of the investment asset, you will decide whether to keep the asset or sell it and move to the £100 cash account. Whatever you keep invested is held for another month (Month 13).
 </p>
-
 {% elif var in [7,8,15,16]  %}
-<p> 
-    After seeing the 12 months with returns since purchase of Asset A and Asset B, both assets are liquidated at the end of Month 12.
-    You will be asked to repurchase (i.e., buy again) one of the assets. That asset will be held for another month (Month 13).
+<p>
+    After seeing the 12 returns since purchase of the investment asset, your portfolio is liquidated at the end of Month 12. You will decide whether to repurchase the asset or keep your £100 in the cash account. Whatever you invest is held for another month (Month 13).
 </p>
-
-
 {% endif %}
 
 {% if var in [1, 3, 5, 7, 9, 11, 13, 15] %}
@@ -149,160 +141,87 @@ Bonus payment information
 
 {% elif var in [2, 4, 6, 8, 10, 12, 14, 16] %}
 <p>
-    At the end of the study, you will receive a bonus payment that depends on one of your return predictions for Month 13 from one of the rounds. The round and return prediction selected for your bonus payment will be randomly chosen from the eight rounds of the study.
+    At the end of the study, you will receive a bonus payment that depends on your return predictions for Month 13 from one of the rounds. The round selected for your bonus payment will be randomly chosen from the eight rounds of the study.
 </p>    
 
 {% endif %}
 
 
 {% if var in [1,5] %}
-<p>
-Specifically, one monthly return will be simulated for the asset you do not sell (i.e., hold on to) before Month 13. That monthly return will be selected randomly, with equal likelihood, from the 12 monthly returns represented by the performance of the asset you observed previously.</p>
-
+<p>Specifically, if you keep the investment asset, one monthly return is simulated for it before Month 13, selected randomly with equal likelihood from the 12 monthly returns you observed. If you move to cash, your earnings are fixed at risk free 0% interest.</p>
 
 {% elif var in [9,13] %}
-<p>
-Specifically, one monthly return will be simulated for the asset you do not sell (i.e., hold on to) before Month 13.</p>
+<p>Specifically, if you keep the investment asset, one monthly return is simulated for it before Month 13. If you move to cash, your earnings are fixed at risk free 0% interest.</p>
 
 {% elif var in [3,7] %}
-<p>Specifically, one monthly return will be simulated for the asset you repurchase (or buy again) before Month 13. That monthly return will be selected randomly, with equal likelihood, from the 12 monthly returns represented by the performance of the asset you observed previously.</p>
+<p>Specifically, if you repurchase the investment asset, one monthly return is simulated for it before Month 13, selected randomly with equal likelihood from the 12 monthly returns you observed. If you stay in cash, your earnings are fixed at risk free 0% interest.</p>
 
 {% elif var in [11,15] %}
-<p>Specifically, one monthly return will be simulated for the asset you repurchase (or buy again) before Month 13.</p>
-
-
+<p>Specifically, if you repurchase the investment asset, one monthly return is simulated for it before Month 13. If you stay in cash, your earnings are fixed at risk free 0% interest.</p>
 
 {% elif var in [2, 4] %}
-<p>
-Specifically, your return prediction will be compared with the statistically correct expected monthly return of the asset. The expected return is based on the 12 equally-likely monthly returns you observed previously</p>
+<p>Specifically, your return prediction is compared with the statistically correct expected monthly return of the investment asset, based on the 12 equally-likely monthly returns you observed.</p>
 
-{% elif var in [ 6, 8] %}
-<p>
-    Specifically, your return prediction will be compared with the statistically correct expected return of the asset. The expected return is based on the 12 equally-likely monthly returns, implied by the returns since purchase you observed previously.
-</p>
+{% elif var in [6, 8] %}
+<p>Specifically, your return prediction is compared with the statistically correct expected return of the investment asset, based on the 12 equally-likely monthly returns implied by the returns since purchase you observed.</p>
 
 {% elif var in [10, 12, 14, 16] %}
-<p>
-    Specifically, your return prediction will be compared with the statistically correct expected return of the asset. 
-</p>
-
-
+<p>Specifically, your return prediction is compared with the statistically correct expected return of the investment asset.</p>
 {% endif %}
 
 
 
     <br>
-   
+
+
 {% if var in [1,3,5,7,9,11,13,15]%}
 <div class="example-box">
-    {% if var == 1  %}
+    {% if var == 1 %}
     <strong>Example:</strong><br>
-    After 12 months, you decide to sell <strong>Asset A</strong> which means you hold <strong>Asset B</strong>, for Month 13. Month 5 is drawn from the 12-month asset performance history you observed for Asset B. Month 5 showed a monthly return of 10% for Asset B, so that you receive a 10% monthly return for holding on to Asset B in Month 13.<br><br>
-    <div class="example-row" style="text-align: center;">
-        <strong> Asset B’s expected monthly return for Month 13:</strong>
-        <code class="example-value"> 10%</code>
-        
-    <div>
-        <strong>Bonus payment:</strong>
-        <code class="example-value">  £1.0 × (1 + 10%)  = £1.10</code>
-    </div>
-    </div>
-     
-    {% elif var == 5  %}
+    After 12 months, you decide to keep the <strong>investment asset</strong> for Month 13. Month 5 is drawn from the 12-month history you observed. Month 5 showed a monthly return of 10%, so you receive a 10% return in Month 13.<br><br>
+    
+    {% elif var == 5 %}
     <strong>Example:</strong><br>
-    After 12 months, you decide to sell <strong>Asset A</strong> which means you hold <strong>Asset B</strong>, for Month 13. Month 5 is drawn from the 12-month asset performance history you observed for Asset B. Month 5 showed a return since purchase of 21% for Asset B after a return since purchase of 10% in Month 4, implying a 10% monthly return for holding on to Asset B in Month 13 (10% = (1 + 21%) / (1 + 10%) - 1).<br><br>
-    <div class="example-row" style="text-align: center;">
-        <strong> Asset B’s expected monthly return for Month 13:</strong>
-        <code class="example-value"> 10%</code>
-        
-    <div>
-        <strong>Bonus payment:</strong>
-        <code class="example-value">  £1.0 × (1 + 10%)  = £1.10</code>
-    </div>
-        
-    </div>
-
+    After 12 months, you decide to keep the <strong>investment asset</strong> for Month 13. Month 5 is drawn from the 12-month history you observed. Month 5 showed a return since purchase of 21% after 10% in Month 4, implying a 10% monthly return (10% = (1 + 21%) / (1 + 10%) − 1) in Month 13.<br><br>
+    
     {% elif var == 3 %}
     <strong>Example:</strong><br>
-    After 12 months, you decide to repurchase <strong>Asset B</strong> which means you hold <strong>Asset B</strong>, for Month 13. Month 5 is drawn from the 12-month asset performance history you observed for Asset B. Month 5 showed a return since purchase of 10% for Asset B, so that you receive a 10% monthly return for holding on to Asset B in Month 13.<br><br>
-    <div class="example-row" style="text-align: center;">
-        <strong> Asset B’s expected monthly return for Month 13:</strong>
-        <code class="example-value"> 10%</code>
-        
-    <div>
-        <strong>Bonus payment:</strong>
-        <code class="example-value">  £1.0 × (1 + 10%)  = £1.10</code>
-    </div>
-    </div>
-
+    After 12 months, you decide to repurchase the <strong>investment asset</strong> for Month 13. Month 5 is drawn from the 12-month history you observed. Month 5 showed a monthly return of 10%, so you receive a 10% return in Month 13.<br><br>
+    
     {% elif var == 7 %}
     <strong>Example:</strong><br>
-    After 12 months, you decide to repurchase <strong>Asset B</strong> which means you hold <strong>Asset B</strong>, for Month 13. Month 5 is drawn from the 12-month asset performance history you observed for Asset B. Month 5 showed a return since purchase of 21% for Asset B after a return since purchase of 10% in Month 4, implying a 10% monthly return for holding on to Asset B in Month 13 (10% = (1 + 21%) / (1 + 10%) - 1).<br><br>
-    <div class="example-row" style="text-align: center;">
-        <strong> Asset B’s expected monthly return for Month 13:</strong>
-        <code class="example-value"> 10%</code>
-        
-    <div>
-        <strong>Bonus payment:</strong>
-        <code class="example-value">  £1.0 × (1 + 10%)  = £1.10</code>
-    </div>
-    </div>
-
+    After 12 months, you decide to repurchase the <strong>investment asset</strong> for Month 13. Month 5 is drawn from the 12-month history you observed. Month 5 showed a return since purchase of 21% after 10% in Month 4, implying a 10% monthly return (10% = (1 + 21%) / (1 + 10%) − 1) in Month 13.<br><br>
+    
     {% elif var == 9 or var == 13 %}
     <strong>Example:</strong><br>
-    After 12 months, you decide to sell <strong>Asset A</strong> which means you hold <strong>Asset B</strong>, for Month 13. The simulation returns a 10% monthly return for holding on to Asset B in Month 13.<br><br>
-    <div class="example-row" style="text-align: center;">
-        <strong> Asset B’s expected monthly return for Month 13:</strong>
-        <code class="example-value"> 10%</code>
-        
-    <div>
-        <strong>Bonus payment:</strong>
-        <code class="example-value">  £1.0 × (1 + 10%)  = £1.10</code>
-    </div>
-    </div>
-
-    {% elif  var == 11 or var == 15 %}
+    After 12 months, you decide to keep the <strong>investment asset</strong> for Month 13. The simulation returns a 10% monthly return.<br><br>
+    
+    {% elif var == 11 or var == 15 %}
     <strong>Example:</strong><br>
-    After 12 months, you decide to repurchase <strong>Asset B</strong> which means you hold <strong>Asset B</strong>, for Month 13. The simulation returns a 10% monthly return for holding on to Asset B in Month 13.<br><br>
+    After 12 months, you decide to repurchase the <strong>investment asset</strong> for Month 13. The simulation returns a 10% monthly return.<br><br>
+    {% endif %}
+    
     <div class="example-row" style="text-align: center;">
-        <strong> Asset B’s expected monthly return for Month 13:</strong>
-        <code class="example-value"> 10%</code>
-        
+        <strong>investment asset's return for Month 13:</strong>
+        <code class="example-value">10%</code>
     <div>
         <strong>Bonus payment:</strong>
-        <code class="example-value">  £1.0 × (1 + 10%)  = £1.10</code>
+        <code class="example-value">£1.0 × (1 + 10%) = £1.10</code>
     </div>
     </div>
-
-    {% endif %}
-
 </div>
+
 
 {% elif var in [2,4,6,8,10,12,14,16] %}
 <div class="example-box">
-
     <strong>Example:</strong><br>
-
-    One of the two assets (<strong>Asset A</strong> or <strong>Asset B</strong>) is randomly selected.
-
-    Suppose <strong>Asset A</strong> is selected. You are asked to predict the <strong>return in month 13</strong> for Asset A.
-
-    Your prediction is compared with the <strong>statistically correct expected value for the monthly return</strong> for Asset A.
-
-    If the difference between your prediction and the actual return is within <strong>±0.3 percentage points</strong>, you receive a bonus.<br><br>
-
+    You are asked to predict the <strong>return in Month 13</strong> for the <strong>investment asset</strong>. Your prediction is compared with the <strong>statistically correct expected monthly return</strong>. If the difference is within <strong>±0.3 percentage points</strong>, you receive a bonus.<br><br>
     <div class="example-row" style="text-align: center;">
-        <strong> Asset B’s expected monthly return for Month 13:</strong> <strong> <code class="example-value"> 2.8%</code></strong><br>
-
-        <strong>Your prediction:</strong> <strong> <code class="example-value"> 3%</code></strong><br>
-        <strong>Difference:</strong> <strong> <code class="example-value"> 0.2%</code></strong> <code class="example-value">→ within ±0.3% </code><br>
-        <strong>Bonus payment:  <code class="example-value"> £2</code></strong>
-
+        <strong>investment asset's expected monthly return for Month 13:</strong> <code class="example-value">2.8%</code><br>
+        <strong>Your prediction:</strong> <code class="example-value">3%</code><br>
+        <strong>Difference:</strong> <code class="example-value">0.2%</code> <code class="example-value">→ within ±0.3%</code><br>
+        <strong>Bonus payment:</strong> <code class="example-value">£2</code>
     </div>
-
-   
-  
-
 </div>
 {% endif %}
 

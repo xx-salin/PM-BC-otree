@@ -97,11 +97,11 @@ Instructions
    
     
     <p style="text-align: justify;">
-      You will invest into two assets, Asset A and Asset B, at the beginning of each round. You will then hold both assets for 12 months, observing their performance at the end of each month, as illustrated in the example below.
+      At the beginning of each round you hold one share of an investment asset plus £100 in a cash account earning 0% interest. You hold the asset for 12 months, observing its performance at the end of each month, as illustrated in the example below.
 
     {% if player.goal_treatment in [1,2,3,4,9,10,11,12]  %}
       <p style="text-align: justify;">
-      The rows show the monthly returns of the two assets at the end of a given month. You will observe the monthly returns for both assets over 12 months, moving from Month 1 to Month 12 by clicking ‘Next month’.
+      The row shows the monthly return of the investment asset at the end of a given month. You will observe its monthly returns over 12 months, moving from Month 1 to Month 12 by clicking 'Next month'.
       </p>
 
       {% if color_treatment == 0 %}
@@ -114,10 +114,10 @@ Instructions
       </div>
       {% endif %}
       
-    {% elif player.goal_treatment in [5,6,7,8,13,14,15,16]  %}
+      {% elif player.goal_treatment in [5,6,7,8,13,14,15,16]  %}
         <p style="text-align: justify;">
-        The rows show the returns since purchase of the two assets at the end of a given month. You will observe the returns since purchase for both assets over 12 months, moving from Month 1 to Month 12 by clicking ‘Next month’.
-        </p> 
+        The row shows the return since purchase of the investment asset at the end of a given month. You will observe its returns since purchase over 12 months, moving from Month 1 to Month 12 by clicking 'Next month'.
+        </p>
 
         {% if color_treatment == 0 %}
         <div class="image-container">
@@ -171,15 +171,14 @@ Instructions
     
     {% if player.goal_treatment in [1,3,5,7,9,11,13,15]  %}
     <p>
-      After observing the performance of both assets for 12 months, at the end of Month 12, you will make an investment decision.
+      After observing the investment asset's performance for 12 months, at the end of Month 12, you will make an investment decision.
     </p>
-
-    </p>On the next screen, you will receive instructions on that investment decision and how it determines your bonus payment.</p>
+    <p>On the next screen, you will receive instructions on that investment decision and how it determines your bonus payment.</p>
     {% elif player.goal_treatment in [2,4,6,8,10,12,14,16]  %}
     <p>
-      After observing the performance of both assets for 12 months, at the end of Month 12, you will make a return prediction.
+      After observing the investment asset's performance for 12 months, at the end of Month 12, you will make a return prediction.
     </p>
-    </p>On the next screen, you will receive instructions on that return prediction and how it determines your bonus payment.</p>
+    <p>On the next screen, you will receive instructions on that return prediction and how it determines your bonus payment.</p>
     {% endif %}
     
     <div class="custom-next-button-container" style="text-align: center;">
