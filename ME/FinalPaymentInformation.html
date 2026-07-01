@@ -26,8 +26,8 @@ p, div {
 {% if goal_treatment in [2,4,6,8,10,12,14,16] %}
 
     <p>
-      For your bonus payment, round {{ runde }} was selected. The asset evaluated in that round was <strong>{{ prediction_asset }}</strong>.
-      Your prediction for that asset was <strong>{{ predicted_return_display }}</strong>,
+      For your bonus payment, round {{ runde }} was selected.
+      Your prediction for the investment asset was <strong>{{ predicted_return_display }}</strong>,
       and the statistically correct expected return for Month 13 was <strong>{{ actual_return_display }}</strong>.
     </p>
 
@@ -48,14 +48,24 @@ p, div {
     {% if goal_treatment in [1,5,9,13] %}
       <!-- SELL decision -->
       <p>
-        For your bonus payment, round <strong>{{ runde }}</strong> was selected. You chose to sell Asset <strong>{{ sold_asset }}</strong>, so your invested asset was <strong>{{ paid_asset }}</strong>. 
-        The realized monthly return for Asset {{ paid_asset }} over the investment month was <strong>{{ realized_return_display }}</strong>.
+        For your bonus payment, round <strong>{{ runde }}</strong> was selected.
+        {% if paid_asset == 'A' %}
+          You chose to keep the investment asset. Its realized monthly return over the investment month was <strong>{{ realized_return_display }}</strong>.
+        {% else %}
+          You chose to sell the investment asset and move to the cash account, which earns 0%.
+        {% endif %}
       </p>
+    
     {% else %}
+
       <!-- BUY decision -->
       <p>
-        For your bonus payment, round <strong>{{ runde }}</strong> was selected. You chose to repurchase Asset <strong>{{ paid_asset }}</strong>, which was your invested asset. 
-       The realized monthly return for Asset {{ paid_asset }} over the investment month was <strong>{{ realized_return_display }}</strong>.
+        For your bonus payment, round <strong>{{ runde }}</strong> was selected.
+        {% if paid_asset == 'A' %}
+          You chose to repurchase the investment asset. Its realized monthly return over the investment month was <strong>{{ realized_return_display }}</strong>.
+        {% else %}
+          You chose to keep your £100 in the cash account, which earns 0%.
+        {% endif %}
       </p>
     {% endif %}
 
@@ -71,7 +81,7 @@ p, div {
           {% endif %}
          </code>
    </div>
-   
+
 
 
    

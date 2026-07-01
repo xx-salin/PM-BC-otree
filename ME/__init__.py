@@ -197,7 +197,7 @@ class Player(BasePlayer):
 
     
     question_3 = models.IntegerField(
-        label='After observing 12 months of the investment asset\'s performance, you will make… ...',
+        label='After observing 12 months of the investment asset\'s performance, you will make…',
         choices=[
 
             [0, 'A sales decision'],
@@ -253,12 +253,12 @@ class Player(BasePlayer):
     )
 
     PredictionA = models.FloatField(
-        label='What do you expect the monthly return of Asset A to be next month? (in %, e.g., 5 for 5%)',
+        label='What do you expect the monthly return of the investment asset to be next month? (in %, e.g., 5 for 5%)',
         min=-100, max=100
     )
 
     RiskA = models.FloatField(
-        label='How risky is the asset A? ',
+        label='How risky is the investment asset? ',
        
         initial=None,
     )
@@ -286,7 +286,7 @@ class Player(BasePlayer):
     
     MuM = models.IntegerField(
         initial=None,
-        verbose_name='Did you rely on the &nbsp;<strong>average monthly return</strong>&nbsp; of assets?',
+        verbose_name='Did you rely on the &nbsp;<strong>average monthly return</strong>&nbsp; of the investment asset?',
          choices=[
             [1, "1 - not at all"],
             [2, "2"],
@@ -299,7 +299,7 @@ class Player(BasePlayer):
     )
     MuC = models.IntegerField(
         initial=None,
-        verbose_name='Did you rely on the &nbsp;<strong>average return since purchase</strong>&nbsp; of assets?',
+        verbose_name='Did you rely on the &nbsp;<strong>average return since purchase</strong>&nbsp; of the investment asset?',
          choices=[
             [1, "1 - not at all"],
             [2, "2"],
@@ -313,7 +313,7 @@ class Player(BasePlayer):
 
     LastRetM = models.IntegerField(
         initial=None,
-        verbose_name='Did you rely on the &nbsp;<strong>last monthly return</strong>&nbsp; of assets?',
+        verbose_name='Did you rely on the &nbsp;<strong>last monthly return</strong>&nbsp; of the investment asset?',
          choices=[
             [1, "1 - not at all"],
             [2, "2"],
@@ -326,7 +326,7 @@ class Player(BasePlayer):
     )
     LastRetC = models.IntegerField(
         initial=None,
-        verbose_name='Did you rely on the &nbsp;<strong>last return since purchase</strong>&nbsp; of assets?',
+        verbose_name='Did you rely on the &nbsp;<strong>last return since purchase</strong>&nbsp; of the investment asset?',
          choices=[
             [1, "1 - not at all"],
             [2, "2"],
@@ -340,7 +340,7 @@ class Player(BasePlayer):
 
     Outperform = models.IntegerField(
         initial=None,
-        verbose_name='Did you rely on &nbsp;<strong>how often</strong>&nbsp; one asset performed better than the other asset? ',
+        verbose_name='Did you rely on &nbsp;<strong>how often</strong>&nbsp; the investment asset performed better than the risk free 0% interest cash account? ',
         choices=[
             [1, "1 - not at all"],
             [2, "2"],
@@ -353,7 +353,7 @@ class Player(BasePlayer):
     )
     Riskiness = models.IntegerField(
         initial=None,
-        verbose_name='Did you rely on the &nbsp;<strong>riskiness</strong>&nbsp; of the assets?',
+        verbose_name='Did you rely on the &nbsp;<strong>riskiness</strong>&nbsp; of the investment asset?',
         choices=[
             [1, "1 - not at all"],
             [2, "2"],
@@ -367,7 +367,7 @@ class Player(BasePlayer):
    
     Recency = models.IntegerField(
         initial=None,
-            verbose_name='Did you rely more on the performance of the assets during the first half (Months 1-6) or the second half (Months 7-12) of the year?',
+            verbose_name='Did you rely more on the performance of the investment asset during the first half (Months 1-6) or the second half (Months 7-12) of the year?',
          choices=[
             [1, "1 - I overweighted Months 1-6"],
             [2, "2"],

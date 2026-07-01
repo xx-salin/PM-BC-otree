@@ -263,7 +263,7 @@ body { background: #f2f2f2; }
 <script src="{% static 'ME/ProgressPieChart.js' %}"></script>
 <script>
 
-const sliderTouched = { RiskA: false, RiskB: false, Confidence: false };
+const sliderTouched = { RiskA: false, Confidence: false };
 
 function setSliderTrack(visualSlider) {
     const min = parseFloat(visualSlider.min) || 0;
@@ -275,7 +275,7 @@ function setSliderTrack(visualSlider) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    ['RiskA', 'RiskB', 'Confidence'].forEach(function (name) {
+    ['RiskA', 'Confidence'].forEach(function (name) {
         const visual = document.getElementById(name + '-visual');
         const hidden = document.getElementById(name);
 
