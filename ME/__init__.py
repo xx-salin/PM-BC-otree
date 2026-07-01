@@ -85,7 +85,7 @@ class Constants(BaseConstants):
 
         # Read monthly returns at full precision; round only when displaying them
         row_A = sheet.iloc[distr * 2][month_columns].tolist()
-        row_B = sheet.iloc[distr * 2 + 1][month_columns].tolist()
+        row_B = [0.0] * len(row_A)  # zero-interest cash account
 
         # NO RANDOMIZATION
         distributions[distr] = [row_A, row_B]
@@ -102,7 +102,7 @@ class Constants(BaseConstants):
     for distr in range(num_distributions):
 
         row_A_cumulative = sheet_cumulative.iloc[distr * 2][month_columns].tolist()
-        row_B_cumulative = sheet_cumulative.iloc[distr * 2 + 1][month_columns].tolist()
+        row_B_cumulative = [0.0] * len(row_A_cumulative)
 
         distributions_compound[distr] = [row_A_cumulative, row_B_cumulative]
 
@@ -234,12 +234,12 @@ class Player(BasePlayer):
     # -------------------------------------
 
     AssetToSell = models.StringField(
-    choices=[('A', 'Asset A'), ('B', 'Asset B')],
+    choices=[('A', 'Asset A'), ('B', 'Cash Account')],
     
     )
   
     AssetToBuy = models.StringField(
-    choices=[('A', 'Asset A'), ('B', 'Asset B')],
+    choices=[('A', 'Asset A'), ('B', 'Cash Account')],
     
     )
     
@@ -256,22 +256,11 @@ class Player(BasePlayer):
         label='What do you expect the monthly return of Asset A to be next month? (in %, e.g., 5 for 5%)',
         min=-100, max=100
     )
-    PredictionB = models.FloatField(
-        label='What do you expect the monthly return of Asset B to be next month? (in %, e.g., 5 for 5%)',
-        min=-100, max=100
-    )
 
     RiskA = models.FloatField(
         label='How risky is the asset A? ',
        
         initial=None,
-       
-    )
-    RiskB = models.FloatField(  
-        label='How risky is the asset B? ',
-       
-        initial=None,
-       
     )
 
     Confidence = models.FloatField(  
@@ -614,17 +603,10 @@ def set_payoffs(player: Player):
     # =========================================================
     elif goal_treatment in [2, 4, 6, 8, 10, 12, 14, 16]:
 
-        # Randomly pick which belief to evaluate
-        pred_asset = random.choice(["A", "B"])
-
-        if pred_asset == "A":
-            prediction = decision_player.PredictionA
-            ##actual_return = random.choice(returns_A)
-            actual_return = float(sum(returns_A) / len(returns_A))
-        else:
-            prediction = decision_player.PredictionB
-            #actual_return = random.choice(returns_B)
-            actual_return = float(sum(returns_B) / len(returns_B))
+        # Belief to evaluate
+        pred_asset = "A"
+        prediction = decision_player.PredictionA
+        actual_return = float(sum(returns_A) / len(returns_A))
 
         player.prediction_asset = pred_asset
         player.predicted_return = prediction
@@ -1010,7 +992,7 @@ class Task_ReturnPrediction(Page):
 
     template_name = 'ME/Task_ReturnPrediction.html'
     form_model = 'player'
-    form_fields = ['PredictionA', 'PredictionB', 'RiskA', 'RiskB', 'Confidence']
+    form_fields = ['PredictionA', 'RiskA', 'Confidence']
 
     @staticmethod
     def is_displayed(player: Player):
@@ -1044,12 +1026,8 @@ class Task_ReturnPrediction(Page):
         errors = []
         if values.get("PredictionA") is None:
             errors.append("Please provide a prediction for Asset A.")
-        if values.get("PredictionB") is None:
-            errors.append("Please provide a prediction for Asset B.")
         if values.get("RiskA") is None:
             errors.append("Please assess the risk of Asset A.")
-        if values.get("RiskB") is None:
-            errors.append("Please assess the risk of Asset B.")
         if values.get("Confidence") is None:
             errors.append("Please indicate your confidence level.")
 

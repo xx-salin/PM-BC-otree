@@ -18,7 +18,7 @@ SESSION_CONFIG_DEFAULTS = {
     'real_world_currency_per_point': 1.00,
     'participation_fee': 3.50, 
     'doc': "",
-    'testing': False, 
+    'testing': True, 
 }
 
 

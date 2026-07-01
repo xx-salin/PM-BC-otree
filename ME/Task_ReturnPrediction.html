@@ -186,7 +186,7 @@ body { background: #f2f2f2; }
         Please answer the following questions about your expectations for next month's returns:
         <br><br>
         {% if var in [2,4,6,8,10,12,14,16] %}
-        If this round is selected, one of the return predictions (chosen at random) will determine your bonus payment.
+        If this round is selected, the accuracy of your return prediction will determine your bonus payment.
         {% endif %}
     </div>
 
@@ -197,7 +197,7 @@ body { background: #f2f2f2; }
             <!-- Prediction A -->
             <div class="question-card">
                 <div class="question-title">
-                    What do you expect the monthly return of Asset A to be next month?
+                    What do you expect the monthly return of the investment asset to be next month?
                     <span class="required-asterisk">*</span>
                 </div>
                 <div class="input-row">
@@ -212,28 +212,10 @@ body { background: #f2f2f2; }
                 </span>
             </div>
 
-            <!-- Prediction B -->
-            <div class="question-card">
-                <div class="question-title">
-                    What do you expect the monthly return of Asset B to be next month?
-                    <span class="required-asterisk">*</span>
-                </div>
-                <div class="input-row">
-                    <input type="number" name="PredictionB" id="PredictionB"
-                           class="input-field"
-                           min="-100" max="100" step="0.1"
-                           placeholder="e.g. 5">
-                    <span class="pct-label">%</span>
-                </div>
-                <span class="field-err" id="err-PredictionB">
-                    Please enter a value between -100 and 100.
-                </span>
-            </div>
-
             <!-- Risk A -->
             <div class="question-card">
                 <div class="question-title">
-                    How risky is Asset A? <span class="required-asterisk">*</span>
+                    How risky is the investment asset? <span class="required-asterisk">*</span>
                 </div>
                 <div class="slider-container">
                     <div class="slider-label">
@@ -244,22 +226,6 @@ body { background: #f2f2f2; }
                     <input type="hidden" name="RiskA" id="RiskA" value="">
                 </div>
                 <span class="field-err" id="err-RiskA">Please move the slider.</span>
-            </div>
-
-            <!-- Risk B -->
-            <div class="question-card">
-                <div class="question-title">
-                    How risky is Asset B? <span class="required-asterisk">*</span>
-                </div>
-                <div class="slider-container">
-                    <div class="slider-label">
-                        <span>Not risky at all</span>
-                        <span>Very risky</span>
-                    </div>
-                    <input type="range" id="RiskB-visual" class="slider" min="0" max="10" step="0.01">
-                    <input type="hidden" name="RiskB" id="RiskB" value="">
-                </div>
-                <span class="field-err" id="err-RiskB">Please move the slider.</span>
             </div>
 
             <!-- Confidence -->
@@ -327,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.querySelector('form').addEventListener('submit', function (e) {
     let valid = true;
 
-    ['PredictionA', 'PredictionB'].forEach(function (name) {
+    ['PredictionA'].forEach(function (name) {
         const input = document.getElementById(name);
         const err   = document.getElementById('err-' + name);
         const val   = input.value.trim();
@@ -339,7 +305,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
         }
     });
 
-    ['RiskA', 'RiskB', 'Confidence'].forEach(function (name) {
+    ['RiskA', 'Confidence'].forEach(function (name) {
         const err = document.getElementById('err-' + name);
         if (!sliderTouched[name]) {
             err.style.display = 'block';
@@ -358,9 +324,8 @@ document.querySelector('form').addEventListener('submit', function (e) {
 function skipPage() {
     const roundNum = js_vars.round_number;
     document.getElementById('PredictionA').value = roundNum;
-    document.getElementById('PredictionB').value = roundNum;
 
-    ['RiskA', 'RiskB', 'Confidence'].forEach(function (name) {
+    ['RiskA', 'Confidence'].forEach(function (name) {
         const visual = document.getElementById(name + '-visual');
         const hidden = document.getElementById(name);
         visual.value = roundNum;
