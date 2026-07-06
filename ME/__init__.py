@@ -135,7 +135,6 @@ class Player(BasePlayer):
     distribution_id = models.IntegerField()
     distribution = models.LongStringField()
     goal_treatment = models.IntegerField()
-    color_treatment = models.IntegerField()  # 0=colored, 1=neutral
     # Payment related -----------------------------------
     paid_subsection = models.PositiveIntegerField()  # 1,..,or num_rounds to be paid
     clicks = models.LongStringField()
@@ -500,9 +499,6 @@ def creating_session(subsession: Subsession):
             p.participant.vars["goal_treatment"] = treatment_key
             p.goal_treatment = treatment_key
 
-            # Assign color treatment (0=colored, 1=neutral)
-            p.participant.vars["color_treatment"] = random.randint(0, 1)
-            p.color_treatment = p.participant.vars["color_treatment"]
 
             # Select simple vs compound returns
             if p.goal_treatment in [1, 2, 3, 4, 9, 10, 11, 12]:  # simple returns
@@ -786,7 +782,6 @@ class Instructions1(Page):
             'testing': player.session.config["testing"],
             'current_page': current_page,
             'total_pages':total_pages,
-            'color_treatment': player.participant.vars["color_treatment"],
         }
     
 class Instructions2(Page):
@@ -887,7 +882,6 @@ class AssetsPerformance(Page):
         percentage = (current_page / total_pages) * 100
         rounded_percentage = math.ceil(percentage)
         var = player.participant.vars.get('goal_treatment')
-        color_treatment = player.participant.vars.get('color_treatment')
 
         # Get distribution for this round
         distr = player.participant.vars['distributions'][player.round_number - 1]
@@ -908,7 +902,6 @@ class AssetsPerformance(Page):
             'asset_a': asset_a_pct,
             'asset_b': asset_b_pct,
             'var': var,
-            'color_treatment': color_treatment,
         }
 
     @staticmethod
@@ -923,7 +916,6 @@ class AssetsPerformance(Page):
             roundnumber=player.round_number,
             participant_id=player.participant.id_in_session,
             goal_treatment=player.participant.vars.get('goal_treatment'),
-            color_treatment=player.participant.vars.get('color_treatment'),
         )
 
 
