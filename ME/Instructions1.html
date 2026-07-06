@@ -97,25 +97,38 @@ Instructions
    
     
     <p style="text-align: justify;">
-      At the beginning of each round you hold one share of an investment asset plus £100 in a risk free cash account earning 0% interest. You hold the asset for 12 months, observing its performance at the end of each month, as illustrated in the example below. <strong>At the end of Month 12, you will need £100 for a bill payment.</strong>
+      At the beginning of each round you hold 1 share of an investment asset plus £100 in a risk free cash account earning 0% interest. You hold the asset for 12 months, observing its performance at the end of each month, as illustrated in the example below. <strong>At the end of Month 12, you will need £100 for a bill payment.</strong>
 
     {% if player.goal_treatment in [1,2,3,4,9,10,11,12]  %}
       <p style="text-align: justify;">
       The row shows the monthly return of the investment asset at the end of a given month. You will observe its monthly returns over 12 months, moving from Month 1 to Month 12 by clicking 'Next month'.
       </p>
 
-    <div class="image-container">
-      <img src="{% static 'ME/MonthlyReturnsNC.png' %}" alt="Return chart example" class="return-image"  width = 50% style="display: block; margin-left: auto; margin-right: auto;" />
-    </div>
+      {% if color_treatment == 0 %}
+      <div class="image-container">
+        <img src="{% static 'ME/MonthlyReturns.png' %}" alt="Return chart example" class="return-image"  width = 50% style="display: block; margin-left: auto; margin-right: auto;" />
+      </div>
+      {% else %}
+      <div class="image-container">
+        <img src="{% static 'ME/MonthlyReturnsNC.png' %}" alt="Return chart example" class="return-image"  width = 50% style="display: block; margin-left: auto; margin-right: auto;" />
+      </div>
+      {% endif %}
       
       {% elif player.goal_treatment in [5,6,7,8,13,14,15,16]  %}
         <p style="text-align: justify;">
         The row shows the return since purchase of the investment asset at the end of a given month. You will observe its returns since purchase over 12 months, moving from Month 1 to Month 12 by clicking 'Next month'.
         </p>
 
-      <div class="image-container">
-        <img src="{% static 'ME/CumulativeReturnsNC.png' %}" alt="Return chart example" class="return-image"  width = 50% style="display: block; margin-left: auto; margin-right: auto;" />
-      </div>
+        {% if color_treatment == 0 %}
+        <div class="image-container">
+          <img src="{% static 'ME/CumulativeReturns.png' %}" alt="Return chart example" class="return-image"  width = 50% style="display: block; margin-left: auto; margin-right: auto;" />
+        </div>
+        {% else %}
+        <div class="image-container">
+          <img src="{% static 'ME/CumulativeReturnsNC.png' %}" alt="Return chart example" class="return-image"  width = 50% style="display: block; margin-left: auto; margin-right: auto;" />
+        </div>
+
+        {% endif %}
 
       {% endif %}
      

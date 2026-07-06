@@ -75,6 +75,16 @@ body {
     text-align: center;
 }
 
+.positive {
+    background-color: #16a34a;
+    color: white;
+}
+
+.negative {
+    background-color: #dc2626;
+    color: white;
+}
+
 .neutral {
     background-color: transparent;
     color: inherit;
@@ -267,8 +277,23 @@ recordClick("enter");
 
 const assetA = js_vars.asset_a;
 const assetB = js_vars.asset_b;
+const colorTreatment = js_vars.color_treatment;
 
 let currentMonth = 0;
+
+function setColor(element, value) {
+    element.classList.remove("positive", "negative");
+
+    if (colorTreatment === 0) {
+        // Colored background (0 = colored)
+        if (value < 0) {
+            element.classList.add("negative");
+        } else {
+            element.classList.add("positive");
+        }
+    }
+    // If colorTreatment === 1 (neutral), don't add any color classes
+}
 
 function skipPage() {
     recordClick("skip_testing");
@@ -294,7 +319,7 @@ function renderMonth() {
     aEl.innerText = (aVal > 0 ? "+" : "") + aVal + "%";
     bEl.innerText = bVal + "%";
 
-    aEl.classList.add("neutral");
+    setColor(aEl, aVal);
     bEl.classList.add("neutral");
 
     recordClick("month_" + (currentMonth + 1));

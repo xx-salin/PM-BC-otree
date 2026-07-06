@@ -116,22 +116,70 @@ Bonus payment information
 
 {% if var in [1,2,9,10] %}
 <p>
-    <strong>You need £100 for a bill payment.</strong> After seeing the 12 monthly returns of the investment asset, you will decide whether to pay the bill from your cash account or by selling the asset. Whatever you keep invested is held for another month (Month 13).
+   #1# <br> <strong>You need to withdraw £100 for a bill payment.</strong> After observing the 12 monthly returns of the investment asset, you will decide whether to <strong>pay the bill from your cash account or by selling the asset.</strong>  Whatever you keep invested is held for another month (Month 13). <br> #1#
 </p>
+
+<br><br>
+
+<p>
+   #2# <br>
+
+    After observing the 12 monthly returns, you <strong>need to withdraw £100 from your portfolio to pay a bill.</strong> <br>
+    You can either <strong>sell the investment asset for £100 or withdraw £100 from your cash account.</strong> <br>
+    If you do not sell the investment asset, it will be held for one additional month (Month 13). Otherwise, the £100 from the sale will be added to your cash account and earn a 0% return during Month 13. <br>
+
+    #2#
+</p>
+
 
 {% elif var in [3,4,11,12] %}
 <p>
-    <strong>You need £100 for a bill payment.</strong> After seeing the 12 monthly returns of the investment asset, the asset is sold at the end of Month 12. After paying the bill, you will decide whether to repurchase the asset or keep your remaining money in the cash account. Whatever you invest is held for another month (Month 13).
+   #1# <br> <strong>You need to withdraw £100 for a bill payment.</strong> After observing the 12 monthly returns of the investment asset, the asset is sold at the end of Month 12 for £100. After paying the bill, you will decide whether to <strong>repurchase the asset or keep your remaining money in the cash account.</strong> Whatever you invest is held for another month (Month 13). <br> #1#
 </p>
+
+<p>
+   #2# <br>
+
+    After observing the 12 monthly returns, the investment asset is sold at the end of Month 12 for £100. Before the sale proceeds are added to your cash account, you can choose to use them to <strong>repurchase the investment asset immediately or keep them in your cash account.</strong> <br>
+    If you repurchase the investment asset, it will be held for one additional month (Month 13). Otherwise, the £100 remains in your cash account and earn a 0% return during Month 13. <br>
+
+    #2#
+</p>
+
 {% elif var in [5,6,13,14] %}
 <p>
-    <strong>You need £100 for a bill payment.</strong> After seeing the 12 returns since purchase of the investment asset, you will decide whether to pay the bill from your cash account or by selling the asset. Whatever you keep invested is held for another month (Month 13).
+    #1# <br> <strong>You need to withdraw £100 for a bill payment.</strong> After observing the 12 returns since purchase of the investment asset, you will decide whether to <strong>pay the bill from your cash account or by selling the asset.</strong> Whatever you keep invested is held for another month (Month 13). <br> #1#
 </p>
+
+<p>
+   #2# <br>
+
+    After observing the 12 returns since purchase, you <strong>need to withdraw £100 from your portfolio to pay a bill.</strong> <br>
+    You can either <strong>sell the investment asset for £100 or withdraw £100 from your cash account.</strong> <br>
+    If you do not sell the investment asset, it will be held for one additional month (Month 13). Otherwise, the £100 from the sale will be added to your cash account and earn a 0% return during Month 13. <br>
+
+    #2#
+</p>
+
+
 {% elif var in [7,8,15,16]  %}
 <p>
-    <strong>You need £100 for a bill payment.</strong> After seeing the 12 returns since purchase of the investment asset, the asset is sold at the end of Month 12. After paying the bill, you will decide whether to repurchase the asset or keep your remaining money in the cash account. Whatever you invest is held for another month (Month 13).
+    #1# <br> <strong>You need to withdraw £100 for a bill payment.</strong> After observing the 12 returns since purchase of the investment asset, the asset is sold at the end of Month 12 for £100. After paying the bill, you will decide whether to <strong>repurchase the asset or keep your remaining money in the cash account.</strong> Whatever you invest is held for another month (Month 13). <br> #1#
 </p>
+
+<p>
+   #2# <br>
+
+    After observing the 12 returns since purchase, the investment asset is sold at the end of Month 12 for £100. Before the sale proceeds are added to your cash account, you can choose to use them to <strong>repurchase the investment asset immediately or keep them in your cash account.</strong> <br>
+    If you repurchase the investment asset, it will be held for one additional month (Month 13). Otherwise, the £100 remains in your cash account and earn a 0% return during Month 13. <br>
+
+    #2#
+</p>
+
 {% endif %}
+
+
+
 
 {% if var in [1, 3, 5, 7, 9, 11, 13, 15] %}
 <p>
