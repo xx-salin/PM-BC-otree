@@ -127,9 +127,9 @@ body { background: #f2f2f2; }
         
     <div > <br>
             {% if is_sell %}
-                You held one share of the investment asset plus £100 in a cash account (0% interest). At the end of Month 12 the share is worth £100, so your portfolio is worth £200. You need to generate £100 in cash. You can either sell the share, or use the £100 from your cash account. Whatever you hold in the investment asset stays invested for one more month.
+                You held 1 share of the investment asset plus £100 in a cash account (0% interest). At the end of Month 12 the share is worth £100, so your portfolio is worth £200. <strong>You need £100 now for a bill payment.</strong> You can either sell the share or use the £100 from your cash account. Whatever you hold in the investment asset stays invested for one more month.
             {% else %}
-                You held one share of the investment asset plus £100 in a cash account (0% interest). The share has just been sold, leaving you with £200 in cash. You need to keep £100 in cash, and can use the other £100 to either repurchase the investment asset or leave it in the cash account. Whatever you hold in the investment asset stays invested for one more month.
+                You held 1 share of the investment asset plus £100 in a cash account (0% interest). The share has just been sold, leaving you with £200 in cash. <strong>You need £100 now for a bill payment.</strong> You can either use the other £100 to repurchase the investment asset or leave it in the cash account. Whatever you hold in the investment asset stays invested for one more month.
             {% endif %}
     </div>
     </div>
@@ -147,8 +147,10 @@ body { background: #f2f2f2; }
         <label class="option-card" id="cardA">
             <div class="option-left">
                 <div class="option-title">
-                    {% if is_sell %}Sell {% else %}Repurchase {% endif %}
-                    investment asset</div>
+                    {% if is_sell %}Sell investment asset
+                    {% else %}Repurchase investment asset
+                    {% endif %}
+                </div>
             </div>
             <input type="radio" name="{% if is_sell %}AssetToSell{% else %}AssetToBuy{% endif %}" value="A">
         </label>
@@ -156,8 +158,10 @@ body { background: #f2f2f2; }
         <label class="option-card" id="cardB">
             <div class="option-left">
                 <div class="option-title">
-                    {% if is_sell %}Use {% else %}Hold in {% endif %}                    
-                    cash account</div>
+                    {% if is_sell %}Do not sell investment asset
+                    {% else %}Do not repurchase investment asset
+                    {% endif %}                    
+                </div>
             </div>
             <input type="radio" name="{% if is_sell %}AssetToSell{% else %}AssetToBuy{% endif %}" value="B">
         </label>
