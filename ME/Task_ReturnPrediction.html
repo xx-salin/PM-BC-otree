@@ -2,7 +2,7 @@
 {% load otree_tags %}
 
 {% block title %}
-Return predictions (round {{player.round_number}} of {{Constants.num_rounds}})
+Return prediction (round {{player.round_number}} of {{Constants.num_rounds}})
 {% endblock %}
 
 {% block styles %}
@@ -183,7 +183,7 @@ body { background: #f2f2f2; }
    
 
     <div class="info">
-        Please answer the following questions about your expectations for next month's returns:
+        Please answer the following questions about your expectations for next month's return:
         <br><br>
         {% if var in [2,4,6,8,10,12,14,16] %}
         If this round is selected, the accuracy of your return prediction will determine your bonus payment.
@@ -231,7 +231,7 @@ body { background: #f2f2f2; }
             <!-- Confidence -->
             <div class="question-card">
                 <div class="question-title">
-                    How confident are you about your predictions?
+                    How confident are you about your prediction?
                     <span class="required-asterisk">*</span>
                 </div>
                 <div class="slider-container">
