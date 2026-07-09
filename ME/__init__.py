@@ -48,8 +48,8 @@ class Constants(BaseConstants):
    
 
     BASE_DIR = os.path.dirname(__file__)
-    monthly_file_path = os.path.join(BASE_DIR, 'Final_1600_Pairs.xlsx')
-    cumulative_file_path = os.path.join(BASE_DIR, 'Final_1600_Pairs_Cumulative.xlsx')
+    monthly_file_path = os.path.join(BASE_DIR, 'Final_RiskyCash_8Rounds_Monthly.xlsx')
+    cumulative_file_path = os.path.join(BASE_DIR, 'Final_RiskyCash_8Rounds_Cumulative.xlsx')
 
     sheet = pandas.read_excel(
         monthly_file_path,

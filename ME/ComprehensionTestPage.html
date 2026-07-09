@@ -71,10 +71,28 @@ Skip for testing</button>
 
 <link rel="stylesheet" href="{% static 'ME/BaseDesign.css' %}"/>
 <link rel="stylesheet" href="{% static 'ME/ProgressPieChart.css' %}"/>
+
 <style>
-    .otree-form label,
-.otree-form span {
+#comprehensionTestForm label,
+#comprehensionTestForm span {
     white-space: pre-line !important;
+}
+
+#comprehensionTestForm input[type="radio"] {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    flex-shrink: 0;
+    -webkit-appearance: radio;
+    appearance: radio;
+}
+
+#comprehensionTestForm .form-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    min-height: 32px;
+    padding: 6px 0;
 }
 </style>
 

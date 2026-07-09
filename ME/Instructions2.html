@@ -169,13 +169,13 @@ Bonus payment information
 
 
 {% if var in [1,5] %}
-<p>Specifically, if you keep the investment asset, one monthly return is simulated for it before Month 13, selected randomly with equal likelihood from the 12 monthly returns you observed. If you move to cash, your earnings are fixed at risk free 0% interest.</p>
+<p>Specifically, if you keep the investment asset, one monthly return is simulated for it before Month 13. That monthly return will be selected randomly, with equal likelihood, from the 12 monthly returns represented by the performance of the asset you observed previously. If you move to cash, your earnings are fixed at risk free 0% interest.</p>
 
 {% elif var in [9,13] %}
 <p>Specifically, if you keep the investment asset, one monthly return is simulated for it before Month 13. If you move to cash, your earnings are fixed at risk free 0% interest.</p>
 
 {% elif var in [3,7] %}
-<p>Specifically, if you repurchase the investment asset, one monthly return is simulated for it before Month 13, selected randomly with equal likelihood from the 12 monthly returns you observed. If you stay in cash, your earnings are fixed at risk free 0% interest.</p>
+<p>Specifically, if you repurchase the investment asset, one monthly return is simulated for it before Month 13. That monthly return will be selected randomly, with equal likelihood, from the 12 monthly returns represented by the performance of the asset you observed previously. If you stay in cash, your earnings are fixed at risk free 0% interest.</p>
 
 {% elif var in [11,15] %}
 <p>Specifically, if you repurchase the investment asset, one monthly return is simulated for it before Month 13. If you stay in cash, your earnings are fixed at risk free 0% interest.</p>
@@ -199,19 +199,19 @@ Bonus payment information
 <div class="example-box">
     {% if var == 1 %}
     <strong>Example:</strong><br>
-    After 12 months, you decide to keep the <strong>investment asset</strong> for Month 13. Month 5 is drawn from the 12-month history you observed. Month 5 showed a monthly return of 10%, so you receive a 10% return in Month 13.<br><br>
+    After 12 months, you decide to keep the <strong>investment asset</strong> for Month 13. Month 5 is drawn from the 12-month history of the asset. Month 5 showed a monthly return of 10%, so you receive a 10% return in Month 13.<br><br>
     
     {% elif var == 5 %}
     <strong>Example:</strong><br>
-    After 12 months, you decide to keep the <strong>investment asset</strong> for Month 13. Month 5 is drawn from the 12-month history you observed. Month 5 showed a return since purchase of 21% after 10% in Month 4, implying a 10% monthly return (10% = (1 + 21%) / (1 + 10%) − 1) in Month 13.<br><br>
+    After 12 months, you decide to keep the <strong>investment asset</strong> for Month 13. Month 5 is drawn from the 12-month history of the asset. Month 5 showed a return since purchase of 21% after 10% in Month 4, implying a 10% monthly return (10% = (1 + 21%) / (1 + 10%) − 1) in Month 13.<br><br>
     
     {% elif var == 3 %}
     <strong>Example:</strong><br>
-    After 12 months, you decide to repurchase the <strong>investment asset</strong> for Month 13. Month 5 is drawn from the 12-month history you observed. Month 5 showed a monthly return of 10%, so you receive a 10% return in Month 13.<br><br>
+    After 12 months, you decide to repurchase the <strong>investment asset</strong> for Month 13. Month 5 is drawn from the 12-month history of the asset. Month 5 showed a monthly return of 10%, so you receive a 10% return in Month 13.<br><br>
     
     {% elif var == 7 %}
     <strong>Example:</strong><br>
-    After 12 months, you decide to repurchase the <strong>investment asset</strong> for Month 13. Month 5 is drawn from the 12-month history you observed. Month 5 showed a return since purchase of 21% after 10% in Month 4, implying a 10% monthly return (10% = (1 + 21%) / (1 + 10%) − 1) in Month 13.<br><br>
+    After 12 months, you decide to repurchase the <strong>investment asset</strong> for Month 13. Month 5 is drawn from the 12-month history of the asset. Month 5 showed a return since purchase of 21% after 10% in Month 4, implying a 10% monthly return (10% = (1 + 21%) / (1 + 10%) − 1) in Month 13.<br><br>
     
     {% elif var == 9 or var == 13 %}
     <strong>Example:</strong><br>
